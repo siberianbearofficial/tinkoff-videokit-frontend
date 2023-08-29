@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 /bazel-out
+/src/assets
+/src/proxy*
 
 # Node
 /node_modules

@@ -1,0 +1,144 @@
+@import "../../../../colors";
+@import "../../../../sizes";
+@import "../../../../weights";
+
+
+main {
+  padding-top: 30px;
+  display: flex;
+  flex-flow: column;
+  gap: 50px;
+
+  .heading, .subheading {
+    margin: 0;
+  }
+
+  .top-info-container {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+  }
+
+  .start-button-container {
+    display: flex;
+    justify-content: center;
+
+    a {
+      width: 20%;
+    }
+  }
+
+  .demo-video {
+    display: flex;
+    justify-content: center;
+
+    app-video-player {
+      width: 1000px;
+    }
+  }
+
+  .boring-text-container {
+    padding-top: 50px;
+    display: flex;
+    justify-content: space-between;
+
+    .boring-text-container__text-container {
+      display: flex;
+      flex-flow: column;
+      gap: 20px;
+      width: 45%;
+
+      .heading, .subheading {
+        text-align: left;
+      }
+    }
+
+    .boring-text-container__video-container {
+      width: 45%;
+    }
+  }
+
+  .advantages-container {
+    display: flex;
+    justify-content: space-between;
+
+    .advantages-container__text-container {
+      width: 45%;
+      display: flex;
+      flex-flow: column;
+      gap: 20px;
+
+      .heading, .subheading {
+        text-align: left;
+
+        ul {
+          display: flex;
+          flex-flow: column;
+          gap: 10px;
+
+          li {
+            display: flex;
+            gap: 20px;
+          }
+
+          span {
+            display: block;
+            padding: 5px;
+            font-size: $fs-desktop-subheading;
+          }
+        }
+      }
+    }
+
+    .advantages-container__video-container {
+      width: 45%;
+    }
+  }
+
+  .ethics-container {
+    margin-top: 50px;
+    background-color: $input-color;
+    border-radius: 5px;
+    padding: 100px 200px;
+    display: flex;
+    flex-flow: column;
+    gap: 50px;
+
+    .heading {
+      color: $accent-dark-color;
+
+      span {
+        font-size: $fs-desktop-heading;
+      }
+    }
+
+    .subheading {
+      text-align: left;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .ethics-principles {
+      display: flex;
+      flex-flow: column;
+      gap: 15px;
+      font-size: $fs-desktop-subheading;
+
+      .ethics-principles-container {
+        display: flex;
+        text-align: left;
+
+        .ethics-principles-container__heading {
+          font-weight: $fw-bold;
+          //flex: 1;
+        }
+
+        .ethics-principles-container__text {
+          //flex: 1;
+        }
+      }
+    }
+  }
+}

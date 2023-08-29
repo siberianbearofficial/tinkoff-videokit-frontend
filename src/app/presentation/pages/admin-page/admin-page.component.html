@@ -1,0 +1,15 @@
+<div class="heading">Управление пользователями</div>
+<div class="container">
+
+  <div class="error" *ngIf="error">{{error}}</div>
+
+  <app-users-list [users]="users"
+                  [disabledUsersUuids]="disabledUsersUuids"
+                  (userDeletionEvent)="onUserDelete($event)"
+                  (userChangeEvent)="onUserChange($event)">
+  </app-users-list>
+
+  <div class="div-button">
+    <a class="button" routerLink="/profile">Назад</a>
+  </div>
+</div>

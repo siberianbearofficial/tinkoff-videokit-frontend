@@ -1,0 +1,58 @@
+<div class="heading">Вход в аккаунт</div>
+<form class="form-group" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="text-field">
+    <label class="text-field__label" for="username">Введите логин</label>
+    <input
+      id="username"
+      class="text-field__input"
+      [ngClass]="{'is-invalid': (form.controls['username'].invalid && form.controls['username'].touched)}"
+      type="text"
+      name="username"
+      formControlName="username"
+      placeholder="Логин"
+      autocomplete="username">
+  </div>
+  <div class="invalid-feedback">
+      <span *ngIf="form.controls['username'].errors?.['required']">
+        Необходимо указать логин<br>
+      </span>
+    <span *ngIf="form.controls['username'].errors?.['minlength']">
+        Логин должен содержать не менее {{form.controls['username'].errors?.['minlength']['requiredLength']}}
+      символов<br>
+      </span>
+  </div>
+  <div class="text-field">
+    <label class="text-field__label" for="password">Введите пароль</label>
+    <input
+      id="password"
+      class="text-field__input"
+      [ngClass]="{'is-invalid': (form.controls['password'].invalid && form.controls['password'].touched)}"
+      type="password"
+      name="password"
+      formControlName="password"
+      placeholder="Пароль"
+      autocomplete="current-password">
+  </div>
+  <div class="invalid-feedback">
+      <span *ngIf="form.controls['password'].errors?.['required']">
+        Необходимо указать пароль<br>
+      </span>
+    <span *ngIf="form.controls['password'].errors?.['minlength']">
+        Пароль должен содержать не менее {{form.controls['password'].errors?.['minlength']['requiredLength']}}
+      символов<br>
+      </span>
+    <span *ngIf="form.controls['password'].errors?.['pattern']">
+        Пароль должен содержать цифры, заглавные и прописные латинские буквы<br>
+      </span>
+  </div>
+  <div class="footer">
+    <div class="footer__button-div">
+      <button class="button" type="submit" [disabled]="form.invalid || form.disabled">Войти</button>
+    </div>
+    <div class="footer__link-div">
+      <a class="link-dark text-decoration-none fst-italic link-opacity-75-hover" routerLink="/sign-up">Еще нет
+        аккаунта</a>
+    </div>
+  </div>
+  <div class="error" *ngIf="error">{{error}}</div>
+</form>

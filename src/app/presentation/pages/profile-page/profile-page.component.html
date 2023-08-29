@@ -1,0 +1,28 @@
+<div class="heading">Личный кабинет</div>
+<div class="container">
+  <div class="a-container">
+    <button class="button" [disabled]="disabled" routerLink="/change-password">Изменить пароль <span
+      class="material-symbols-sharp">edit</span></button>
+  </div>
+  <div class="a-container">
+    <button class="button" [disabled]="disabled" routerLink="/history">История генераций <span
+      class="material-symbols-sharp">work_history</span></button>
+  </div>
+  <div class="a-container" *ngIf="admin">
+    <button class="button" [disabled]="disabled" routerLink="/admin">Управление пользователями <span
+      class="material-symbols-sharp">group</span></button>
+  </div>
+
+  <div class="footer-buttons">
+    <div class="a-container">
+      <a class="button a-exit" role="button" (click)="onSignOutClick()">Выйти <span class="material-symbols-sharp">logout</span></a>
+    </div>
+    <div class="a-container">
+      <a class="button a-delete" role="button" (click)="openModal()">Удалить аккаунт <span
+        class="material-symbols-sharp">delete_forever</span></a>
+    </div>
+  </div>
+
+  <div class="error" *ngIf="error">{{error}}</div>
+  <div class="success" *ngIf="success">{{success}}</div>
+</div>

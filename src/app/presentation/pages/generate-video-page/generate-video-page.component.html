@@ -1,0 +1,106 @@
+<div class="main-container">
+  <div class="heading">Генерация видео</div>
+  <div class="container" *ngIf="step == 0">
+    <div class="left-side-container">
+      <div class="avatars-container">
+        <div class="avatars-container__header">
+          <div class="subheading">Аватар</div>
+          <div class="buttons">
+            <button class="button button-sm" [ngClass]="{'button-sm-selected': alignmentIndex == 0}"
+                    (click)="onAlignButtonClick(0)">
+              <span class="material-symbols-sharp">format_align_left</span>
+            </button>
+            <button class="button button-sm" [ngClass]="{'button-sm-selected': alignmentIndex == 1}"
+                    (click)="onAlignButtonClick(1)">
+              <span class="material-symbols-sharp">format_align_center</span>
+            </button>
+            <button class="button button-sm" [ngClass]="{'button-sm-selected': alignmentIndex == 2}"
+                    (click)="onAlignButtonClick(2)">
+              <span class="material-symbols-sharp">format_align_right</span>
+            </button>
+          </div>
+        </div>
+        <div class="avatars">
+          <div class="avatar" *ngFor="let avatar of avatars; let i = index"
+               [ngClass]="{'avatar-selected': avatarIndex == i}"
+               (click)="setAvatarIndex(i)">
+            <img src="{{avatar.image_url}}" alt="avatar">
+          </div>
+        </div>
+      </div>
+      <div class="text-container">
+        <div class="text-container__header">
+          <div class="subheading">Текст</div>
+          <div class="buttons">
+            <button class="button button-sm" (click)="onRephraseButtonClick(descriptionTextArea.value)">
+              <span class="material-symbols-sharp">sync</span>
+            </button>
+            <button class="button button-sm" (click)="onTranslateButtonClick(descriptionTextArea.value)">
+              <span class="material-symbols-sharp">translate</span>
+            </button>
+          </div>
+        </div>
+        <div class="text-container__main">
+          <textarea #descriptionTextArea></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="right-side-container">
+      <div class="backgrounds_container">
+        <div class="subheading">Фон</div>
+        <div class="backgrounds">
+          <div class="background" *ngFor="let background of backgrounds; let i = index"
+               [ngClass]="{'background-selected': backgroundIndex == i}"
+               (click)="setBackgroundIndex(i)">
+            <img src="{{background.image_url}}" alt="background">
+          </div>
+        </div>
+      </div>
+      <div class="sound-container">
+        <div class="sound-container__music">
+          <div class="subheading">Музыка</div>
+          <label class="input-file">
+            <input type="file" name="file" (change)="onMusicChange($event)">
+            <span class="material-symbols-sharp">audio_file</span> <span>{{chooseMusic}}</span>
+          </label>
+        </div>
+        <div class="sound-container__voice">
+          <div class="subheading">Голос</div>
+          <button class="button-sm" (click)="onChangeVoiceButtonClick()">{{voices[voiceIndex]}}</button>
+        </div>
+      </div>
+      <div class="filler"></div>
+      <button class="button" id="generate-button" (click)="onGenerateButtonClick(descriptionTextArea.value)">
+        Сгенерировать
+      </button>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="step == 1">
+    <div class="left-side-container">
+      <div class="subheading">Результат</div>
+      <video width="100%"
+             controls
+             preload="auto"
+             data-setup="{}">
+        <source src="{{videoUrl}}" type="video/mp4">
+      </video>
+    </div>
+    <div class="right-side-container">
+      <div class="subheading text-right">Оцените работу сайта</div>
+      <div class="rate-stars">
+        <div class="rate-star" (click)="setRateStarSelected(1)"><span
+          [ngClass]="{'rate-star-selected': rateStarSelected > 0}" class="material-symbols-sharp">star</span></div>
+        <div class="rate-star" (click)="setRateStarSelected(2)"><span
+          [ngClass]="{'rate-star-selected': rateStarSelected > 1}" class="material-symbols-sharp">star</span></div>
+        <div class="rate-star" (click)="setRateStarSelected(3)"><span
+          [ngClass]="{'rate-star-selected': rateStarSelected > 2}" class="material-symbols-sharp">star</span></div>
+        <div class="rate-star" (click)="setRateStarSelected(4)"><span
+          [ngClass]="{'rate-star-selected': rateStarSelected > 3}" class="material-symbols-sharp">star</span></div>
+        <div class="rate-star" (click)="setRateStarSelected(5)"><span
+          [ngClass]="{'rate-star-selected': rateStarSelected > 4}" class="material-symbols-sharp">star</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="error" *ngIf="error">{{error}}</div>
+</div>

@@ -1,0 +1,28 @@
+@import "../../../../../colors";
+@import "../../../../../sizes";
+
+
+.table {
+  width: 100%;
+  text-align: left;
+  font-size: $fs-desktop-subheading;
+
+  th, td {
+    padding-bottom: 10px;
+  }
+
+  .a-delete {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    color: $red-color;
+  }
+
+  .a-delete:disabled {
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.text-center {
+  text-align: center;
+}

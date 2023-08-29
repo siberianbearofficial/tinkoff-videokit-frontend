@@ -1,0 +1,31 @@
+<table class="table">
+  <thead class="bg-light">
+  <tr>
+    <th>ID</th>
+    <th>Логин</th>
+    <th class="text-center">Роль</th>
+    <th class="text-center">Удалить</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of _users">
+    <td>{{user.uuid}}</td>
+    <td>{{user.username}}</td>
+    <td class="text-center">
+      <button class="badge"
+              [ngClass]="getIsAdminClass(user)"
+              [disabled]="isDisabled(user.uuid)"
+              (click)="onIsAdminClick(user)">
+        {{getIsAdminText(user)}}
+      </button>
+    </td>
+    <td>
+      <button class="a-delete"
+              [disabled]="isDisabled(user.uuid)"
+              (click)="onDeleteClick(user)">
+        <span class="material-symbols-sharp">delete</span>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

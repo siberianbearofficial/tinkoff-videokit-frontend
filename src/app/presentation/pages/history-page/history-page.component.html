@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="heading">История генераций</div>
+  <div class="history-container">
+    <div class="subheading" *ngIf="!videos?.length">На данный момент здесь нет ни одного видео. Сгенерировать можно
+      <b><a routerLink="/generate-video">тут</a></b>.
+    </div>
+    <app-videos-list *ngIf="videos?.length" [videos]="videos"
+                     (videoDeletionEvent)="onVideoDelete($event)"></app-videos-list>
+  </div>
+</div>
