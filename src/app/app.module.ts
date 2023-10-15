@@ -25,6 +25,10 @@ import {DialogModule} from "@angular/cdk/dialog";
 import { HeaderLayoutComponent } from './presentation/shared/layouts/header-layout/header-layout.component';
 import { HistoryPageComponent } from './presentation/pages/history-page/history-page.component';
 import { VideosListComponent } from './presentation/shared/components/videos-list/videos-list.component';
+import {MatIconModule} from "@angular/material/icon";
+import { ImagesListComponent } from './presentation/shared/components/images-list/images-list.component';
+import { PreviewComponent } from './presentation/shared/components/preview/preview.component';
+import { SlidesListComponent } from './presentation/shared/components/slides-list/slides-list.component';
 
 const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
@@ -47,7 +51,10 @@ const httpInterceptorProviders = [
     ProfilePageComponent,
     HeaderLayoutComponent,
     HistoryPageComponent,
-    VideosListComponent
+    VideosListComponent,
+    ImagesListComponent,
+    PreviewComponent,
+    SlidesListComponent
   ],
     imports: [
         BrowserModule,
@@ -55,7 +62,8 @@ const httpInterceptorProviders = [
         BrowserAnimationsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        DialogModule
+        DialogModule,
+        MatIconModule
     ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

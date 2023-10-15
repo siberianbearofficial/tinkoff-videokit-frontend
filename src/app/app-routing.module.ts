@@ -22,14 +22,14 @@ export const historyPageUrl: string = 'history';
 const routes: Routes = [
   {
     path: '', component: HeaderLayoutComponent, children: [
-      {path: '', title: 'Umlaut VideoKit', component: LandingPageComponent},
-      {path: signInPageUrl, title: 'Вход', component: SignInPageComponent},
-      {path: signUpPageUrl, title: 'Регистрация', component: SignUpPageComponent},
-      {path: changePasswordPageUrl, title: 'Смена пароля', component: ChangePasswordPageComponent},
-      {path: adminPageUrl, title: 'Пользователи', component: AdminPageComponent},
-      {path: profilePageUrl, title: 'Профиль', component: ProfilePageComponent},
+      {path: '', title: 'Tinkoff VideoKit', component: LandingPageComponent},
+      // {path: signInPageUrl, title: 'Вход', component: SignInPageComponent},
+      // {path: signUpPageUrl, title: 'Регистрация', component: SignUpPageComponent},
+      // {path: changePasswordPageUrl, title: 'Смена пароля', component: ChangePasswordPageComponent},
+      // {path: adminPageUrl, title: 'Пользователи', component: AdminPageComponent},
+      // {path: profilePageUrl, title: 'Профиль', component: ProfilePageComponent},
       {path: generateVideoPageUrl, title: 'Генерация видео', component: GenerateVideoPageComponent},
-      {path: historyPageUrl, title: 'История генераций', component: HistoryPageComponent},
+      // {path: historyPageUrl, title: 'История генераций', component: HistoryPageComponent},
       {path: '**', title: 'Страница не найдена', component: UnknownPageComponent}
     ]
   }

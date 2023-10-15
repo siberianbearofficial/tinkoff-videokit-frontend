@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GenerateVideoService} from "../../../core/usecases/interactors/generate-video.service";
 import {catchError, Observable, of, Subscription, switchMap} from "rxjs";
 import {RedirectService} from "../../../infrastructure/adapters/services/redirect.service";
-import {signInPageUrl} from "../../../app-routing.module";
-import {AuthenticationService} from "../../../core/usecases/interactors/authentication.service";
+// import {signInPageUrl} from "../../../app-routing.module";
+// import {AuthenticationService} from "../../../core/usecases/interactors/authentication.service";
 import {Video} from "../../../core/domain/entities/video";
 
 
@@ -14,139 +14,107 @@ import {Video} from "../../../core/domain/entities/video";
 })
 export class GenerateVideoPageComponent implements OnInit, OnDestroy {
 
-  private isSignedInSubscription!: Subscription;
+  // private isSignedInSubscription!: Subscription;
   private generateVideoSubscription!: Subscription;
 
-  public step: number = 0;
+  // public step: number = 0;
   public error: string = '';
 
-  public videoUrl: string = '';
+  // public videoUrl: string = '';
 
-  public rateStarSelected: number = 0;
+  // public rateStarSelected: number = 0;
 
-  public avatars = [
+  // public avatars = [
+  //   {
+  //     image_url: '/static/images/avatars/avatar1.png'
+  //   },
+  //   {
+  //     image_url: '/static/images/avatars/avatar2.png'
+  //   },
+  //   {
+  //     image_url: '/static/images/avatars/avatar3.png'
+  //   },
+  //   {
+  //     image_url: '/static/images/avatars/avatar4.png'
+  //   }
+  // ];
+  // public avatarIndex: number = 0;
+
+  public images = [
     {
-      image_url: '/static/images/avatars/avatar1.png'
+      image_url: 'src/assets/images/backgrounds/background1.jpg'
     },
     {
-      image_url: '/static/images/avatars/avatar2.png'
+      image_url: 'src/assets/images/backgrounds/background2.jpg'
     },
     {
-      image_url: '/static/images/avatars/avatar3.png'
-    },
-    {
-      image_url: '/static/images/avatars/avatar4.png'
+      image_url: 'src/assets/images/backgrounds/background3.jpg'
     }
   ];
-  public avatarIndex: number = 0;
+  public imageIndex: number = 0;
 
-  public backgrounds = [
-    {
-      image_url: '/static/images/backgrounds/background1.jpg'
-    },
-    {
-      image_url: '/static/images/backgrounds/background2.jpg'
-    },
-    {
-      image_url: '/static/images/backgrounds/background3.jpg'
-    }
+  public avatarPositions: string[] = [
+    'слева снизу',
+    'в центре',
+    'справа'
   ];
-  public backgroundIndex: number = 0;
-
-  public voices: string[] = [
-    'бодрый',
-    'нейтральный',
-    'спокойный',
-    'уверенный'
-  ];
-  public voiceIndex: number = 0;
-
-  public musicBlob?: Blob;
-  public chooseMusic: string = 'Выберите аудио-файл';
-
-  public alignmentIndex: number = 1;
+  public avatarPositionIndex: number = 1;
 
   constructor(private generateVideoService: GenerateVideoService,
               private redirectService: RedirectService,
-              private authenticationService: AuthenticationService) {
+              /*private authenticationService: AuthenticationService*/) {
   }
 
   public ngOnInit(): void {
-    this.isSignedInSubscription = this.authenticationService.isSignedIn()
-      .pipe(
-        catchError(() => {
-          return of(false);
-        }),
-        switchMap((isSignedIn: boolean): Observable<boolean> => {
-          return this.redirectService.redirectIf(!isSignedIn, signInPageUrl);
-        })
-      )
-      .subscribe();
+    // this.isSignedInSubscription = this.authenticationService.isSignedIn()
+    //   .pipe(
+    //     catchError(() => {
+    //       return of(false);
+    //     }),
+    //     switchMap((isSignedIn: boolean): Observable<boolean> => {
+    //       return this.redirectService.redirectIf(!isSignedIn, signInPageUrl);
+    //     })
+    //   )
+    //   .subscribe();
   }
 
-  public showError(error: Error) {
+  public showError(error: Error): void {
     this.error = error.message;
   }
 
-  public onChangeVoiceButtonClick() {
-    this.voiceIndex = (this.voiceIndex == this.voices.length - 1) ? 0 : (this.voiceIndex + 1);
+  public onChangeAvatarPositionButtonClick(): void {
+    this.avatarPositionIndex = (this.avatarPositionIndex == this.avatarPositions.length - 1) ? 0 : (this.avatarPositionIndex + 1);
   }
 
-  public onGenerateButtonClick(description: string) {
-    this.generateVideoSubscription = this.generateVideoService.generateVideo(this.avatarIndex, this.alignmentIndex, description, this.backgroundIndex, this.musicBlob, this.voiceIndex)
-      .pipe(
-        catchError((error) => {
-          this.showError(error);
-          return of(false);
-        }),
-        switchMap((status) => {
-          if (status != false) {
-            this.step = 1;
-            this.videoUrl = (status as Video).videoUrl;
-          }
-          return of(status);
-        })
-      )
-      .subscribe();
-  }
+  // public onGenerateButtonClick(description: string) {
+  //   this.generateVideoSubscription = this.generateVideoService.generateVideo(this.avatarIndex, this.alignmentIndex, description, this.backgroundIndex, this.musicBlob, this.avatarPositionIndex)
+  //     .pipe(
+  //       catchError((error) => {
+  //         this.showError(error);
+  //         return of(false);
+  //       }),
+  //       switchMap((status) => {
+  //         if (status != false) {
+  //           this.step = 1;
+  //           this.videoUrl = (status as Video).videoUrl;
+  //         }
+  //         return of(status);
+  //       })
+  //     )
+  //     .subscribe();
+  // }
 
-  public onRephraseButtonClick(description: string) {
+  // public setRateStarSelected(rateStarSelected: number) {
+  //   this.rateStarSelected = rateStarSelected;
+  // }
 
-  }
-
-  public onTranslateButtonClick(description: string) {
-
-  }
-
-  public onAlignButtonClick(alignmentIndex: number) {
-    this.alignmentIndex = alignmentIndex;
-  }
-
-  public onMusicChange(event: Event): void {
-    if (event.target) {
-      let target = (event.target as HTMLInputElement).files;
-      if (target) {
-        this.musicBlob = target[0];
-        this.chooseMusic = target[0].name;
-      }
-    }
-  }
-
-  public setRateStarSelected(rateStarSelected: number) {
-    this.rateStarSelected = rateStarSelected;
-  }
-
-  public setAvatarIndex(avatarIndex: number) {
-    this.avatarIndex = avatarIndex;
-  }
-
-  public setBackgroundIndex(backgroundIndex: number) {
-    this.backgroundIndex = backgroundIndex;
+  public setImageIndex(imageIndex: number): void {
+    this.imageIndex = imageIndex;
   }
 
   public ngOnDestroy() {
-    if (this.isSignedInSubscription)
-      this.isSignedInSubscription.unsubscribe();
+    // if (this.isSignedInSubscription)
+    //   this.isSignedInSubscription.unsubscribe();
     if (this.generateVideoSubscription)
       this.generateVideoSubscription.unsubscribe();
   }

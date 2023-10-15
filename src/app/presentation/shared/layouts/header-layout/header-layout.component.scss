@@ -8,6 +8,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 30px 80px;
+  background-color: $accent-color;
 
   font-size: $fs-desktop-subheading;
 
@@ -23,8 +25,15 @@ header {
   }
 }
 
+// Main
+main {
+  padding: 30px 80px;
+}
+
 // Footer
 footer {
+  padding-bottom: 10px;
+
   .line {
     height: 1px;
     margin-bottom: 10px;
@@ -33,6 +42,4 @@ footer {
   .subheading {
     margin: 0;
   }
-  padding-top: 50px;
-  padding-bottom: 10px;
 }
