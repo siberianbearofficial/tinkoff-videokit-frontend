@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {QRCodeModule} from 'angularx-qrcode';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -18,17 +19,21 @@ import {DeleteUserModalComponent} from './presentation/shared/components/delete-
 import {UsersListComponent} from './presentation/shared/components/users-list/users-list.component';
 import {AuthenticationInterceptor} from "./presentation/shared/interceptors/authentication.interceptor";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from "@angular/forms";
-import { ProfilePageComponent } from './presentation/pages/profile-page/profile-page.component';
+import {ProfilePageComponent} from './presentation/pages/profile-page/profile-page.component';
 import {DialogModule} from "@angular/cdk/dialog";
-import { HeaderLayoutComponent } from './presentation/shared/layouts/header-layout/header-layout.component';
-import { HistoryPageComponent } from './presentation/pages/history-page/history-page.component';
-import { VideosListComponent } from './presentation/shared/components/videos-list/videos-list.component';
+import {HeaderLayoutComponent} from './presentation/shared/layouts/header-layout/header-layout.component';
+import {HistoryPageComponent} from './presentation/pages/history-page/history-page.component';
+import {ProjectsListComponent} from './presentation/shared/components/projects-list/projects-list.component';
 import {MatIconModule} from "@angular/material/icon";
-import { ImagesListComponent } from './presentation/shared/components/images-list/images-list.component';
-import { PreviewComponent } from './presentation/shared/components/preview/preview.component';
-import { SlidesListComponent } from './presentation/shared/components/slides-list/slides-list.component';
+import {ImagesListComponent} from './presentation/shared/components/images-list/images-list.component';
+import {PreviewComponent} from './presentation/shared/components/preview/preview.component';
+import {SlidesListComponent} from './presentation/shared/components/slides-list/slides-list.component';
+import {NgOptimizedImage} from "@angular/common";
+import {VideoModalComponent} from './presentation/shared/components/video-modal/video-modal.component';
+import {ProjectsPageComponent} from './presentation/pages/projects-page/projects-page.component';
+import {ShareVideoModalComponent} from './presentation/shared/components/share-video-modal/share-video-modal.component';
 
 const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
@@ -51,20 +56,25 @@ const httpInterceptorProviders = [
     ProfilePageComponent,
     HeaderLayoutComponent,
     HistoryPageComponent,
-    VideosListComponent,
+    ProjectsListComponent,
     ImagesListComponent,
     PreviewComponent,
-    SlidesListComponent
+    SlidesListComponent,
+    VideoModalComponent,
+    ProjectsPageComponent,
+    ShareVideoModalComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        DialogModule,
-        MatIconModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    DialogModule,
+    MatIconModule,
+    NgOptimizedImage,
+    QRCodeModule
+  ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
