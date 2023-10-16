@@ -1,3 +1,65 @@
-<div class="container">
-  Компонент для предпросмотра
+<div (window:resize)="afterInit()"></div>
+<div class="bg-image w-100" #imageContainer>
+
+  <!--  TODO Сюда надо добавлять блоки с абсолютным позиционированием, которые будут рисоваться поверх фона -->
+  <!--  TODO То есть, сюда надо как-либо разместить видео аватара (на первое время просто любой кадр из видео) -->
+
+
+  <!-- НИЖЕ ТО, ЧТО МОЖНО БЫЛО БЫ СДЕЛАТЬ ДЛЯ DRAG&DROP ИЗМЕНЕНИЙ (ПОКА НЕ НУЖНО) -->
+  <!--  <svg class="position-absolute w-100 h-100" id="svg-line">-->
+  <!--    <g class="barcode" *ngIf="relativeBarcodeQuadrilateral">-->
+  <!--      <line class="line"-->
+  <!--            [attr.x1]="relativeBarcodeQuadrilateral.p1.x"-->
+  <!--            [attr.y1]="relativeBarcodeQuadrilateral.p1.y"-->
+  <!--            [attr.x2]="relativeBarcodeQuadrilateral.p2.x"-->
+  <!--            [attr.y2]="relativeBarcodeQuadrilateral.p2.y"/>-->
+  <!--      <line class="line"-->
+  <!--            [attr.x1]="relativeBarcodeQuadrilateral.p2.x"-->
+  <!--            [attr.y1]="relativeBarcodeQuadrilateral.p2.y"-->
+  <!--            [attr.x2]="relativeBarcodeQuadrilateral.p3.x"-->
+  <!--            [attr.y2]="relativeBarcodeQuadrilateral.p3.y"/>-->
+  <!--      <line class="line"-->
+  <!--            [attr.x1]="relativeBarcodeQuadrilateral.p3.x"-->
+  <!--            [attr.y1]="relativeBarcodeQuadrilateral.p3.y"-->
+  <!--            [attr.x2]="relativeBarcodeQuadrilateral.p4.x"-->
+  <!--            [attr.y2]="relativeBarcodeQuadrilateral.p4.y"/>-->
+  <!--      <line class="line"-->
+  <!--            [attr.x1]="relativeBarcodeQuadrilateral.p4.x"-->
+  <!--            [attr.y1]="relativeBarcodeQuadrilateral.p4.y"-->
+  <!--            [attr.x2]="relativeBarcodeQuadrilateral.p1.x"-->
+  <!--            [attr.y2]="relativeBarcodeQuadrilateral.p1.y"/>-->
+  <!--    </g>-->
+  <!--  </svg>-->
+  <!--  <div class="corners" *ngIf="initialBarcodeQuadrilateral && initialLogoQuadrilateral">-->
+  <!--    &lt;!&ndash;  Barcode quadrilateral corners  &ndash;&gt;-->
+
+  <!--    <app-image-selection-corner [boundaryElement]="imageContainer"-->
+  <!--                                [initialPosition]="initialBarcodeQuadrilateral.p1"-->
+  <!--                                color="green"-->
+  <!--                                bgColor="darkseagreen"-->
+  <!--                                (dragMoveEvent)="onBarcodeQuadrilateralCornerDrag('p1', $event)"-->
+  <!--                                (dragEndEvent)="onDragEnd()">-->
+  <!--    </app-image-selection-corner>-->
+  <!--    <app-image-selection-corner [boundaryElement]="imageContainer"-->
+  <!--                                [initialPosition]="initialBarcodeQuadrilateral.p2"-->
+  <!--                                color="green"-->
+  <!--                                bgColor="darkseagreen"-->
+  <!--                                (dragMoveEvent)="onBarcodeQuadrilateralCornerDrag('p2', $event)"-->
+  <!--                                (dragEndEvent)="onDragEnd()">-->
+  <!--    </app-image-selection-corner>-->
+  <!--    <app-image-selection-corner [boundaryElement]="imageContainer"-->
+  <!--                                [initialPosition]="initialBarcodeQuadrilateral.p3"-->
+  <!--                                color="green"-->
+  <!--                                bgColor="darkseagreen"-->
+  <!--                                (dragMoveEvent)="onBarcodeQuadrilateralCornerDrag('p3', $event)"-->
+  <!--                                (dragEndEvent)="onDragEnd()">-->
+  <!--    </app-image-selection-corner>-->
+  <!--    <app-image-selection-corner [boundaryElement]="imageContainer"-->
+  <!--                                [initialPosition]="initialBarcodeQuadrilateral.p4"-->
+  <!--                                color="green"-->
+  <!--                                bgColor="darkseagreen"-->
+  <!--                                (dragMoveEvent)="onBarcodeQuadrilateralCornerDrag('p4', $event)"-->
+  <!--                                (dragEndEvent)="onDragEnd()">-->
+  <!--    </app-image-selection-corner>-->
+  <!--  </div>-->
 </div>
