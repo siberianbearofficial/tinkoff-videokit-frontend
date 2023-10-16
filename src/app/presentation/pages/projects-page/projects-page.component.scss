@@ -1,0 +1,27 @@
+@import "../../../../colors";
+@import "../../../../weights";
+@import "../../../../sizes";
+
+
+.container {
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
+
+  .heading {
+    text-align: left;
+  }
+
+  .projects {
+    display: grid;
+
+    .project {
+      cursor: pointer;
+      font-size: $fs-desktop-subheading;
+
+      &:hover {
+        color: $dark-color-2;
+      }
+    }
+  }
+}
