@@ -1,30 +1,68 @@
-<div class="main-container">
+<div class="error" *ngIf="error">
+  <div class="heading">Ошибка</div>
+  <div class="details">
+    {{error}}
+  </div>
+</div>
+<div class="main-container" *ngIf="project">
   <div class="top-side-container">
     <div class="left-side-container">
+<!--      <div class="left-side-container__header">-->
+<!--        <div class="left-side-container__header__left">-->
+<!--          <mat-icon (click)="onBackButtonClick()" style="cursor: pointer">arrow_back</mat-icon>-->
+<!--          <div class="subheading">Проекты</div>-->
+<!--        </div>-->
+<!--        <div class="left-side-container__header__right">-->
+<!--          <div class="qr">-->
+<!--            <mat-icon>qr_code</mat-icon>-->
+<!--          </div>-->
+<!--          <button class="button" (click)="onPlayButtonClick()">-->
+<!--            <mat-icon>play_arrow</mat-icon>-->
+<!--            Смотреть-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="left-side-container__header">
-        <mat-icon routerLink="/projects">arrow_back</mat-icon>
-        <div class="subheading">Изображения</div>
+        <div class="subheading">Медиафайлы</div>
       </div>
       <div class="left-side-container__main">
         <!--    TODO передать список медиафайлов (ссылок) в компонент    -->
         <app-images-list></app-images-list>
       </div>
     </div>
-    <div class="right-side-container">
-      <div class="right-side-container__main">
+    <div class="middle-side-container">
+      <div class="middle-side-container__main">
         <!--    TODO передать все необходимое в компонент    -->
         <app-preview></app-preview>
       </div>
-      <div class="right-side-container__footer">
-        <div class="slide-time-container">
-          <div class="subheading">Время на слайд:</div>
-          <!--    TODO выбор времени на слайд       -->
-          <input type="text" value="0:14">
+      <div class="middle-side-container__footer">
+        <div class="button-round" (click)="onPlayButtonClick()">
+          <mat-icon>play_arrow</mat-icon>
         </div>
-        <div class="avatar-position-container">
-          <div class="subheading">Расположение аватара:</div>
-          <button class="button-sm"
-                  (click)="onChangeAvatarPositionButtonClick()">{{avatarPositions[avatarPositionIndex]}}</button>
+        <div class="button-round" (click)="onQrButtonClick()">
+          <mat-icon>qr_code</mat-icon>
+        </div>
+        <div class="button-round" (click)="onGenerateButtonClick()">
+          <mat-icon>autorenew</mat-icon>
+        </div>
+      </div>
+    </div>
+    <div class="right-side-container">
+      <div class="subheading">Свойства</div>
+      <div class="properties">
+        <div class="property">
+          <div class="property__header">Время на слайд</div>
+          <div class="property__main text-field" *ngIf="project.slides">
+            <input type="text" class="input" [value]="project.slides[currentSlideIndex].time">
+            сек
+          </div>
+        </div>
+        <div class="property">
+          <div class="property__header">Расположение аватара</div>
+          <div class="property__main">
+            <button class="button-sm"
+                    (click)="onChangeAvatarPositionButtonClick()">{{avatarTypes[project.slides[currentSlideIndex].avatarType]}}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -33,32 +71,5 @@
     <!--    TODO передать список слайдов и номер текущего в компонент    -->
     <app-slides-list></app-slides-list>
   </div>
-
-  <!--  <div class="container" *ngIf="step == 1">-->
-  <!--    <div class="left-side-container">-->
-  <!--      <div class="subheading">Результат</div>-->
-  <!--      <video width="100%"-->
-  <!--             controls-->
-  <!--             preload="auto"-->
-  <!--             data-setup="{}">-->
-  <!--        <source src="{{videoUrl}}" type="video/mp4">-->
-  <!--      </video>-->
-  <!--    </div>-->
-  <!--    <div class="right-side-container">-->
-  <!--      <div class="subheading text-right">Оцените работу сайта</div>-->
-  <!--      <div class="rate-stars">-->
-  <!--        <div class="rate-star" (click)="setRateStarSelected(1)"><span-->
-  <!--          [ngClass]="{'rate-star-selected': rateStarSelected > 0}" class="material-symbols-sharp">star</span></div>-->
-  <!--        <div class="rate-star" (click)="setRateStarSelected(2)"><span-->
-  <!--          [ngClass]="{'rate-star-selected': rateStarSelected > 1}" class="material-symbols-sharp">star</span></div>-->
-  <!--        <div class="rate-star" (click)="setRateStarSelected(3)"><span-->
-  <!--          [ngClass]="{'rate-star-selected': rateStarSelected > 2}" class="material-symbols-sharp">star</span></div>-->
-  <!--        <div class="rate-star" (click)="setRateStarSelected(4)"><span-->
-  <!--          [ngClass]="{'rate-star-selected': rateStarSelected > 3}" class="material-symbols-sharp">star</span></div>-->
-  <!--        <div class="rate-star" (click)="setRateStarSelected(5)"><span-->
-  <!--          [ngClass]="{'rate-star-selected': rateStarSelected > 4}" class="material-symbols-sharp">star</span></div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
   <div class="error" *ngIf="error">{{error}}</div>
 </div>
