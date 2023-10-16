@@ -1,0 +1,24 @@
+@import "../../../../../colors";
+@import "../../../../../sizes";
+@import "../../../../../weights";
+
+
+.modal-container {
+  padding: 30px;
+  display: flex;
+  flex-flow: column;
+  gap: 30px;
+
+  background-color: $white-color;
+  border-radius: 5px;
+
+  .subheading {
+    font-weight: $fw-bold;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
