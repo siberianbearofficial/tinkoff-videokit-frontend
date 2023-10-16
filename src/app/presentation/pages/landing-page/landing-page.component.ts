@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {GenerateVideoService} from "../../../core/usecases/interactors/generate-video.service";
+import {ProjectsService} from "../../../core/usecases/interactors/projects.service";
 
 @Component({
   selector: 'app-landing-page',
