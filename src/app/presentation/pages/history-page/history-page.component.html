@@ -4,7 +4,7 @@
     <div class="subheading" *ngIf="!videos?.length">На данный момент здесь нет ни одного видео. Сгенерировать можно
       <b><a routerLink="/generate-video">тут</a></b>.
     </div>
-    <app-videos-list *ngIf="videos?.length" [videos]="videos"
-                     (videoDeletionEvent)="onVideoDelete($event)"></app-videos-list>
+<!--    <app-videos-list *ngIf="videos?.length" [videos]="videos"-->
+<!--                     (videoDeletionEvent)="onVideoDelete($event)"></app-videos-list>-->
   </div>
 </div>
