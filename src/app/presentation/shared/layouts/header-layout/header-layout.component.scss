@@ -15,6 +15,26 @@ header {
 
   .logo {
     font-weight: $fw-bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: $fs-desktop-heading-2;
+    gap: 20px;
+  }
+
+  .menu {
+    display: flex;
+    gap: 50px;
+
+    &__point {
+      cursor: pointer;
+      color: $dark-color-2;
+      font-weight: $fw-bold;
+
+      &:hover {
+        color: $dark-color;
+      }
+    }
   }
 
   .profile-button {
