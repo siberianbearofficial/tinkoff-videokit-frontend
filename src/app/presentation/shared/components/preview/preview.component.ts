@@ -1,12 +1,13 @@
 import {
+  AfterContentChecked,
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
   QueryList,
-  Renderer2,
+  Renderer2, ViewChild,
   ViewChildren
 } from '@angular/core';
 import {CoordinatesService} from "../../../../infrastructure/adapters/services/coordinates.service";
@@ -17,11 +18,15 @@ import {Point} from "@angular/cdk/drag-drop";
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PreviewComponent implements OnInit, AfterViewInit, AfterContentChecked {
   @Input() avatarImage: string = '';
   @Input() backgroundImage: string = '';
+  @Input() avatarPosition?: Point;
+  @Input() avatarScale?: number;
 
-  @ViewChildren('imageContainer', {read: ElementRef}) imageContainerQueryList?: QueryList<ElementRef>;
+  @Output() avatarPositionEvent: EventEmitter<Point> = new EventEmitter<Point>();
+
+  @ViewChild('imageContainer') imageContainerQuery?: ElementRef;
 
   public relativeAvatarRectangle?: {
     topLeftPoint: Point;
@@ -42,48 +47,50 @@ export class PreviewComponent implements OnInit, AfterViewInit, OnDestroy {
   private image?: HTMLImageElement;
   private avatar?: HTMLImageElement;
 
+  private afterViewInit: boolean = false;
+
   constructor(private renderer: Renderer2,
-              private coordinates: CoordinatesService) {
+              private imageCoordinates: CoordinatesService) {
   }
 
   public ngOnInit(): void {
-    this.calculateRelativeAvatarRectangle();
-    this.image = new Image();  // Создается элемент изображения, который будет растягиваться как потребуется в разных ситуациях
-    this.image.src = this.backgroundImage;  // TODO поставить то, что было передано в компонент
-    // Здесь на фон изображение устанавливается (для простоты),
-    // но вообще говоря нужно будет предоставить возможность установить и видео (к концу месяца)
+    this.image = new Image();
+    this.image.src = this.backgroundImage;
 
     this.avatar = new Image();
     this.avatar.src = this.avatarImage;
   }
 
   public ngAfterViewInit(): void {
-    // Здесь происходит растягивание фонового изображения на всю ширину и настройка сервиса для пересчета координат
-    if (this.avatar && this.image && this.imageContainerQueryList?.first) {
-      this.imageOriginalWidth = this.image.width;
-
+    this.afterViewInit = true;
+    if (this.image && this.avatar && this.imageContainerQuery && this.avatarPosition) {
       this.avatarRectangle = {
-        topLeftPoint: {
-          x: this.avatar.x,
-          y: this.avatar.y
-        },
+        topLeftPoint: this.avatarPosition,
         bottomRightPoint: {
-          x: this.avatar.x + this.avatar.width,
-          y: this.avatar.y + this.avatar.height
+          x: this.avatarPosition.x + this.avatar.width * (this.avatarScale ? this.avatarScale : 1),
+          y: this.avatarPosition.y + this.avatar.height * (this.avatarScale ? this.avatarScale : 1)
         }
       };
-      // TODO прямоугольник с границами аватара - это хорошо, но надо как-то контроллировать его отрисовку, чтобы он масштабировался в размеры этого прямоугольника
 
-      this.image.setAttribute('width', '100%');
-      this.renderer.appendChild(this.imageContainerQueryList.first.nativeElement, this.image);  // Это добавляет фон в контейнер
-      this.renderer.appendChild(this.imageContainerQueryList.first.nativeElement, this.avatar);  // Это добавляет аватара в контейнер (и нам все еще нужно как-то его масштабировать в размер прямоугольника avatarRectangle)
+      this.imageOriginalWidth = this.image.width;
+
+      console.log('Original image width:', this.image.width);
+      console.log('Original avatar rectangle:', this.avatarRectangle);
+
+      this.image.style.width = '100%';
+      this.avatar.style.position = 'absolute';
+      this.avatar.style.left = '0';
+      this.avatar.style.top = '0';
+
+      this.renderer.appendChild(this.imageContainerQuery.nativeElement, this.image);
+      this.renderer.appendChild(this.imageContainerQuery.nativeElement, this.avatar);
 
       if (this.imageOriginalWidth)
-        this.coordinates.setupSystem(0, 0, this.image.width / this.imageOriginalWidth);
+        this.imageCoordinates.setupSystem(0, 0, this.image.width / this.imageOriginalWidth);
 
-      Promise.resolve(null).then((): void => {
+      setTimeout((): void => {
         this.afterInit();
-      });
+      }, 1);
     }
   }
 
@@ -94,48 +101,64 @@ export class PreviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngAfterContentChecked(): void {
-    this.calculateWeight();
-    this.calculateRelativeAvatarRectangle();
+    if (this.afterViewInit) {
+      this.calculateWeight();
+      this.calculateRelativeAvatarRectangle();
+    }
   }
 
-  // ЭТО ФУНЦИИ, КОТОРЫЕ МОГУТ ПОНАДОБИТЬСЯ ДЛЯ DRAG&DROP ИЗМЕНЕНИЙ (ПОКА НЕ НУЖНО)
-  // public onLogoQuadrilateralCornerDrag(corner: string, relativePoint: Point): void {
-  //   this.calculateWeight();
-  //   if (this.logoQuadrilateral && corner in this.logoQuadrilateral)
-  //     this.logoQuadrilateral[corner as keyof Quadrilateral] = this.coordinates.systemToOriginalPoint(relativePoint);
-  // }
-  //
-  // public onDragEnd(): void {
-  //   if (this.logoQuadrilateral) {
-  //     this.logoQuadrilateralEvent.emit(this.logoQuadrilateral);
-  //   }
-  // }
+  public onAvatarRectangleDrag(event: any): void {
+    const centerPosition: Point = event.source.getFreeDragPosition();
+    this.calculateWeight();
+    if (this.avatarRectangle) {
+      const width: number = this.avatarRectangle.bottomRightPoint.x - this.avatarRectangle.topLeftPoint.x;
+      const height: number = this.avatarRectangle.bottomRightPoint.y - this.avatarRectangle.topLeftPoint.y;
+      this.avatarRectangle.topLeftPoint = this.imageCoordinates.systemToOriginalPoint(centerPosition);
+      this.avatarRectangle.bottomRightPoint = {
+        x: this.avatarRectangle.topLeftPoint.x + width,
+        y: this.avatarRectangle.topLeftPoint.y + height
+      }
+    }
+  }
 
-  public ngOnDestroy(): void {
-    if (this.image)
-      this.image.removeAttribute('width');
+  public onAvatarRectangleDragEnd(): void {
+    if (this.avatarRectangle) {
+      this.avatarPositionEvent.emit(this.avatarRectangle.topLeftPoint);
+    }
+  }
+
+  private applyAvatarRectangle(rect: { topLeftPoint: Point, bottomRightPoint: Point }): void {
+    if (this.avatar) {
+      this.avatar.style.left = `${rect.topLeftPoint.x}px`;
+      this.avatar.style.top = `${rect.topLeftPoint.y}px`;
+      this.avatar.style.width = `${rect.bottomRightPoint.x - rect.topLeftPoint.x}px`;
+      this.avatar.style.height = `${rect.bottomRightPoint.y - rect.topLeftPoint.y}px`;
+    }
   }
 
   private calculateInitialAvatarRectangle(): void {
     if (this.avatarRectangle) {
       this.initialAvatarRectangle = {
-        topLeftPoint: this.coordinates.originalToSystemPoint(this.avatarRectangle.topLeftPoint),
-        bottomRightPoint: this.coordinates.originalToSystemPoint(this.avatarRectangle.bottomRightPoint)
-      };
+        topLeftPoint: this.imageCoordinates.originalToSystemPoint(this.avatarRectangle.topLeftPoint),
+        bottomRightPoint: this.imageCoordinates.originalToSystemPoint(this.avatarRectangle.bottomRightPoint)
+      }
     }
   }
 
   private calculateRelativeAvatarRectangle(): void {
     if (this.avatarRectangle) {
       this.relativeAvatarRectangle = {
-        topLeftPoint: this.coordinates.originalToSystemPoint(this.avatarRectangle.topLeftPoint),
-        bottomRightPoint: this.coordinates.originalToSystemPoint(this.avatarRectangle.bottomRightPoint)
-      };
+        topLeftPoint: this.imageCoordinates.originalToSystemPoint(this.avatarRectangle.topLeftPoint),
+        bottomRightPoint: this.imageCoordinates.originalToSystemPoint(this.avatarRectangle.bottomRightPoint)
+      }
+      this.applyAvatarRectangle(this.relativeAvatarRectangle);
     }
   }
 
   private calculateWeight(): void {
-    if (this.image && this.imageOriginalWidth)
-      this.coordinates.setWeight(this.image.width / this.imageOriginalWidth);
+    if (this.image && this.imageOriginalWidth) {
+      const w = this.image.width / this.imageOriginalWidth;
+      this.imageCoordinates.setWeight(w);
+    }
   }
 }
