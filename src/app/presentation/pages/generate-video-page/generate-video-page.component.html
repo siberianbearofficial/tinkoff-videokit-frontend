@@ -26,7 +26,6 @@
         <div class="subheading">Медиафайлы</div>
       </div>
       <div class="left-side-container__main">
-        <!--    TODO передать список медиафайлов (ссылок) в компонент    -->
         <app-images-list
           [mediaUrls]="project.mjImages"
           [selectedIndex]="getBackgroundUrlIndex()"
@@ -76,7 +75,6 @@
     </div>
   </div>
   <div class="bottom-side-container">
-    <!--    TODO передать список слайдов и номер текущего в компонент    -->
     <app-slides-list [slides]="project.slides" [selectedIndex]="currentSlideIndex" (selectedIndexChange)="currentSlideIndex = $event"></app-slides-list>
   </div>
   <div class="error" *ngIf="error">{{error}}</div>
