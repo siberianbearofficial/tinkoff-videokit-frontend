@@ -8,10 +8,10 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 80px;
+  padding: 12px 80px;
   background-color: $accent-color;
 
-  font-size: $fs-desktop-subheading;
+  font-size: $fs-desktop-label;
 
   .logo {
     font-weight: $fw-bold;
@@ -19,7 +19,7 @@ header {
     display: flex;
     align-items: center;
     font-size: $fs-desktop-heading-2;
-    gap: 20px;
+    gap: 15px;
   }
 
   .menu {

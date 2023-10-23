@@ -13,6 +13,7 @@
     .background {
       width: 192px;
       height: 108px;
+      border-radius: 5px;
       overflow: clip;
 
       img {
@@ -25,7 +26,7 @@
 
       &-selected, &:hover {
         border: 5px solid $accent-dark-color;
-        border-radius: 5px;
+        cursor: pointer;
       }
     }
   }
