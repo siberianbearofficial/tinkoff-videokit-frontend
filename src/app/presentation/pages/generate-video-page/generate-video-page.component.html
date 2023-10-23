@@ -4,36 +4,44 @@
     {{error}}
   </div>
 </div>
-<div class="main-container" *ngIf="project">
+<div class="main-container" *ngIf="project && project.slides">
   <div class="top-side-container">
     <div class="left-side-container">
-<!--      <div class="left-side-container__header">-->
-<!--        <div class="left-side-container__header__left">-->
-<!--          <mat-icon (click)="onBackButtonClick()" style="cursor: pointer">arrow_back</mat-icon>-->
-<!--          <div class="subheading">Проекты</div>-->
-<!--        </div>-->
-<!--        <div class="left-side-container__header__right">-->
-<!--          <div class="qr">-->
-<!--            <mat-icon>qr_code</mat-icon>-->
-<!--          </div>-->
-<!--          <button class="button" (click)="onPlayButtonClick()">-->
-<!--            <mat-icon>play_arrow</mat-icon>-->
-<!--            Смотреть-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div class="left-side-container__header">-->
+      <!--        <div class="left-side-container__header__left">-->
+      <!--          <mat-icon (click)="onBackButtonClick()" style="cursor: pointer">arrow_back</mat-icon>-->
+      <!--          <div class="subheading">Проекты</div>-->
+      <!--        </div>-->
+      <!--        <div class="left-side-container__header__right">-->
+      <!--          <div class="qr">-->
+      <!--            <mat-icon>qr_code</mat-icon>-->
+      <!--          </div>-->
+      <!--          <button class="button" (click)="onPlayButtonClick()">-->
+      <!--            <mat-icon>play_arrow</mat-icon>-->
+      <!--            Смотреть-->
+      <!--          </button>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div class="left-side-container__header">
         <div class="subheading">Медиафайлы</div>
       </div>
       <div class="left-side-container__main">
         <!--    TODO передать список медиафайлов (ссылок) в компонент    -->
-        <app-images-list></app-images-list>
+        <app-images-list
+          [mediaUrls]="project.mjImages"
+          [selectedIndex]="getBackgroundUrlIndex()"
+          (selectedImageIndexChange)="onBackgroundImageChange($event)">
+        </app-images-list>
       </div>
     </div>
     <div class="middle-side-container">
       <div class="middle-side-container__main">
-        <!--    TODO передать все необходимое в компонент    -->
-        <app-preview></app-preview>
+        <app-preview avatarImage="assets/img/thara-man.png"
+                     [avatarPosition]="project.slides[currentSlideIndex].avatarPosition"
+                     [avatarScale]="project.slides[currentSlideIndex].avatarScale"
+                     (avatarPositionEvent)="onAvatarPositionChange($event)"
+                     [backgroundImage]="project.slides[currentSlideIndex].background">
+        </app-preview>
       </div>
       <div class="middle-side-container__footer">
         <div class="button-round" (click)="onPlayButtonClick()">
@@ -57,13 +65,13 @@
             сек
           </div>
         </div>
-        <div class="property">
-          <div class="property__header">Расположение аватара</div>
-          <div class="property__main">
-            <button class="button-sm"
-                    (click)="onChangeAvatarPositionButtonClick()">{{avatarTypes[project.slides[currentSlideIndex].avatarType]}}</button>
-          </div>
-        </div>
+        <!--        <div class="property">-->
+        <!--          <div class="property__header">Расположение аватара</div>-->
+        <!--          <div class="property__main">-->
+        <!--            <button class="button-sm"-->
+        <!--                    (click)="onChangeAvatarPositionButtonClick()">{{avatarTypes[project.slides[currentSlideIndex].avatarType]}}</button>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
     </div>
   </div>

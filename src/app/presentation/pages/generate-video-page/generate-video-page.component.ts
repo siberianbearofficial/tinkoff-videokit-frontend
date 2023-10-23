@@ -9,6 +9,7 @@ import {Dialog} from "@angular/cdk/dialog";
 import {VideoModalComponent} from "../../shared/components/video-modal/video-modal.component";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {ShareVideoModalComponent} from "../../shared/components/share-video-modal/share-video-modal.component";
+import {Point} from "@angular/cdk/drag-drop";
 
 
 @Component({
@@ -33,6 +34,8 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
     'в центре',
     'справа'
   ];
+
+  public selectedBackground: number = 0;
 
   public currentSlideIndex: number = 0;
 
@@ -129,6 +132,20 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
       else
         this.project.slides[this.currentSlideIndex].avatarType = 0;
     }
+  }
+
+  public onAvatarPositionChange(position: Point): void {
+    if (this.project && this.project.slides)
+      this.project.slides[this.currentSlideIndex].avatarPosition = position;
+  }
+
+  public getBackgroundUrlIndex(): number {
+      return this.project ? this.project.mjImages.findIndex((el: string): boolean => el === this.project?.slides[this.currentSlideIndex].background) : 0;
+  }
+
+  public onBackgroundImageChange(index: number): void {
+    if (this.project)
+      this.project.slides[this.currentSlideIndex].background = this.project.mjImages[index];
   }
 
   public showError(error: Error): void {
