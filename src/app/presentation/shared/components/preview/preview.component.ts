@@ -4,11 +4,8 @@ import {
   Component,
   ElementRef, EventEmitter,
   Input,
-  OnDestroy,
   OnInit, Output,
-  QueryList,
-  Renderer2, ViewChild,
-  ViewChildren
+  Renderer2, ViewChild
 } from '@angular/core';
 import {CoordinatesService} from "../../../../infrastructure/adapters/services/coordinates.service";
 import {Point} from "@angular/cdk/drag-drop";

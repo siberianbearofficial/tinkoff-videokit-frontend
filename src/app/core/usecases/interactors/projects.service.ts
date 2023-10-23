@@ -3,7 +3,6 @@ import {ProjectsServiceInterface} from "../../domain/interfaces/services/project
 import {Observable, of} from "rxjs";
 import {ProjectsAdapterService} from "../../../infrastructure/adapters/services/projects-adapter.service";
 import {Project} from "../../domain/entities/project";
-import {v4 as generateUuid} from "uuid";
 
 
 @Injectable({
