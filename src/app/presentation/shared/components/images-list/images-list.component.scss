@@ -11,6 +11,13 @@
     gap: 10px;
 
     .background {
+      img {
+        width: 192px;
+        height: 108px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
 
       &-selected, &:hover {
         border: 5px solid $accent-dark-color;
