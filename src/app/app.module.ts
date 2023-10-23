@@ -34,6 +34,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {VideoModalComponent} from './presentation/shared/components/video-modal/video-modal.component';
 import {ProjectsPageComponent} from './presentation/pages/projects-page/projects-page.component';
 import {ShareVideoModalComponent} from './presentation/shared/components/share-video-modal/share-video-modal.component';
+import {CdkDrag} from "@angular/cdk/drag-drop";
 
 const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
@@ -64,17 +65,18 @@ const httpInterceptorProviders = [
     ProjectsPageComponent,
     ShareVideoModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    DialogModule,
-    MatIconModule,
-    NgOptimizedImage,
-    QRCodeModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        DialogModule,
+        MatIconModule,
+        NgOptimizedImage,
+        QRCodeModule,
+        CdkDrag
+    ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
