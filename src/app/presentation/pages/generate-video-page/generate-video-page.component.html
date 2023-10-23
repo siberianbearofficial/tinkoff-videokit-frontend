@@ -77,7 +77,7 @@
   </div>
   <div class="bottom-side-container">
     <!--    TODO передать список слайдов и номер текущего в компонент    -->
-    <app-slides-list></app-slides-list>
+    <app-slides-list [slides]="project.slides" [selectedIndex]="currentSlideIndex" (selectedIndexChange)="currentSlideIndex = $event"></app-slides-list>
   </div>
   <div class="error" *ngIf="error">{{error}}</div>
 </div>
