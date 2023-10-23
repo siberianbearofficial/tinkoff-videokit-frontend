@@ -1,3 +1,10 @@
 <div class="container">
-  <img src="assets/img/mock-slides-list.png">
+  <div class="slides">
+    <div *ngFor="let slide of slides; let i = index"
+         class="slides__item"
+         [ngClass]="{'slides__item-selected': selectedIndex == i}"
+         (click)="selectSlide(i)">
+      <img [src]="slide.background" alt="Slide">
+    </div>
+  </div>
 </div>
