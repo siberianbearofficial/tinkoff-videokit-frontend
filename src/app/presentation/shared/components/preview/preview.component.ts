@@ -13,34 +13,67 @@ import {
 import {CoordinatesService} from "../../../../infrastructure/adapters/services/coordinates.service";
 import {Point} from "@angular/cdk/drag-drop";
 
+
+interface Rectangle {
+  topLeftPoint: Point;
+  bottomRightPoint: Point;
+}
+
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit, AfterViewInit, AfterContentChecked {
+
+  public _backgroundImage: string = '';
+  get backgroundImage(): string {
+    return this._backgroundImage;
+  }
+
+  @Input() set backgroundImage(value: string) {
+    this._backgroundImage = value;
+    if (this.image) {
+      this.image.style.width = '';
+      this.image.src = this._backgroundImage;
+      this.image.onload = () => {
+        if (this.image) {
+          this.imageOriginalWidth = this.image.width;
+
+          this.image.style.width = '100%';
+
+          if (this.imageOriginalWidth)
+            this.imageCoordinates.setupSystem(0, 0, this.image.width / this.imageOriginalWidth);
+
+          setTimeout((): void => {
+            this.afterInit();
+          }, 1);
+        }
+      };
+    }
+  }
+
+  public _avatarPosition?: Point;
+  get avatarPosition(): Point | undefined {
+    return this._avatarPosition;
+  }
+
+  @Input() set avatarPosition(value: Point) {
+    this._avatarPosition = value;
+    this.calculateAvatarRectangle();
+    this.afterInit();
+  }
+
   @Input() avatarImage: string = '';
-  @Input() backgroundImage: string = '';
-  @Input() avatarPosition?: Point;
   @Input() avatarScale?: number;
 
   @Output() avatarPositionEvent: EventEmitter<Point> = new EventEmitter<Point>();
 
   @ViewChild('imageContainer') imageContainerQuery?: ElementRef;
 
-  public relativeAvatarRectangle?: {
-    topLeftPoint: Point;
-    bottomRightPoint: Point;
-  };
-  public initialAvatarRectangle?: {
-    topLeftPoint: Point;
-    bottomRightPoint: Point;
-  };
-
-  public avatarRectangle?: {
-    topLeftPoint: Point;
-    bottomRightPoint: Point;
-  }
+  public relativeAvatarRectangle?: Rectangle;
+  public initialAvatarRectangle?: Rectangle;
+  public avatarRectangle?: Rectangle;
 
   private imageOriginalWidth?: number;
 
@@ -55,42 +88,38 @@ export class PreviewComponent implements OnInit, AfterViewInit, AfterContentChec
 
   public ngOnInit(): void {
     this.image = new Image();
-    this.image.src = this.backgroundImage;
+    this.image.src = this._backgroundImage;
+    this.image.onload = () => {
+      if (this.image) {
+        this.imageOriginalWidth = this.image.width;
+        this.image.style.width = '100%';
+
+        if (this.imageOriginalWidth)
+          this.imageCoordinates.setupSystem(0, 0, this.image.width / this.imageOriginalWidth);
+      }
+    };
 
     this.avatar = new Image();
+    this.avatar.style.position = 'absolute';
+    this.avatar.style.left = '0';
+    this.avatar.style.top = '0';
     this.avatar.src = this.avatarImage;
+    this.avatar.onload = () => {
+      this.calculateAvatarRectangle();
+    };
   }
 
   public ngAfterViewInit(): void {
     this.afterViewInit = true;
-    if (this.image && this.avatar && this.imageContainerQuery && this.avatarPosition) {
-      this.avatarRectangle = {
-        topLeftPoint: this.avatarPosition,
-        bottomRightPoint: {
-          x: this.avatarPosition.x + this.avatar.width * (this.avatarScale ? this.avatarScale : 1),
-          y: this.avatarPosition.y + this.avatar.height * (this.avatarScale ? this.avatarScale : 1)
-        }
-      };
-
-      this.imageOriginalWidth = this.image.width;
-
-      console.log('Original image width:', this.image.width);
-      console.log('Original avatar rectangle:', this.avatarRectangle);
-
-      this.image.style.width = '100%';
-      this.avatar.style.position = 'absolute';
-      this.avatar.style.left = '0';
-      this.avatar.style.top = '0';
+    if (this.image && this.avatar && this.imageContainerQuery) {
+      this.calculateAvatarRectangle();
 
       this.renderer.appendChild(this.imageContainerQuery.nativeElement, this.image);
       this.renderer.appendChild(this.imageContainerQuery.nativeElement, this.avatar);
 
-      if (this.imageOriginalWidth)
-        this.imageCoordinates.setupSystem(0, 0, this.image.width / this.imageOriginalWidth);
-
       setTimeout((): void => {
         this.afterInit();
-      }, 1);
+      }, 10);
     }
   }
 
@@ -127,12 +156,12 @@ export class PreviewComponent implements OnInit, AfterViewInit, AfterContentChec
     }
   }
 
-  private applyAvatarRectangle(rect: { topLeftPoint: Point, bottomRightPoint: Point }): void {
+  private applyAvatarRectangle(rect: Rectangle): void {
     if (this.avatar) {
       this.avatar.style.left = `${rect.topLeftPoint.x}px`;
       this.avatar.style.top = `${rect.topLeftPoint.y}px`;
-      this.avatar.style.width = `${rect.bottomRightPoint.x - rect.topLeftPoint.x}px`;
-      this.avatar.style.height = `${rect.bottomRightPoint.y - rect.topLeftPoint.y}px`;
+      this.avatar.style.width = `${(rect.bottomRightPoint.x - rect.topLeftPoint.x) * (this.avatarScale ? this.avatarScale : 1)}px`;
+      this.avatar.style.height = `${(rect.bottomRightPoint.y - rect.topLeftPoint.y) * (this.avatarScale ? this.avatarScale : 1)}px`;
     }
   }
 
@@ -152,6 +181,30 @@ export class PreviewComponent implements OnInit, AfterViewInit, AfterContentChec
         bottomRightPoint: this.imageCoordinates.originalToSystemPoint(this.avatarRectangle.bottomRightPoint)
       }
       this.applyAvatarRectangle(this.relativeAvatarRectangle);
+    }
+  }
+
+  private calculateAvatarRectangle(): void {
+    if (this._avatarPosition) {
+      if (this.avatar && this.avatarRectangle) {
+        const width: number = this.avatarRectangle.bottomRightPoint.x - this.avatarRectangle.topLeftPoint.x;
+        const height: number = this.avatarRectangle.bottomRightPoint.y - this.avatarRectangle.topLeftPoint.y;
+        this.avatarRectangle = {
+          topLeftPoint: this._avatarPosition,
+          bottomRightPoint: {
+            x: this._avatarPosition.x + width,
+            y: this._avatarPosition.y + height
+          }
+        };
+      } else if (this.avatar) {
+        this.avatarRectangle = {
+          topLeftPoint: this._avatarPosition,
+          bottomRightPoint: {
+            x: this._avatarPosition.x + this.avatar.width,
+            y: this._avatarPosition.y + this.avatar.height
+          }
+        };
+      }
     }
   }
 

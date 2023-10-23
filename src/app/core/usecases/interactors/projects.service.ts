@@ -41,9 +41,9 @@ export class ProjectsService implements ProjectsServiceInterface {
           background: "/static/images/4A53CH/mj_image_2.jpg",
           avatarPosition: {
             x: 13.4,
-            y: 214.98
+            y: 14.98
           },
-          avatarScale: 0.5,
+          avatarScale: 0.3,
           avatarType: 1,
           time: 14.2
         },
@@ -53,7 +53,7 @@ export class ProjectsService implements ProjectsServiceInterface {
             x: 102.16,
             y: 21.07
           },
-          avatarScale: 1.0,
+          avatarScale: 0.1,
           avatarType: 1,
           time: 0.8
         },
@@ -63,7 +63,7 @@ export class ProjectsService implements ProjectsServiceInterface {
             x: 170.82,
             y: 15.7
           },
-          avatarScale: 1.0,
+          avatarScale: 0.5,
           avatarType: 1,
           time: 5.3
         }
