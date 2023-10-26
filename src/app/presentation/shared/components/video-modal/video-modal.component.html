@@ -1,0 +1,14 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <div class="subheading">Готовое видео</div>
+    <button class="modal-close" (click)="modalRef.close()"><mat-icon>close</mat-icon></button>
+  </div>
+  <div class="modal-main">
+    <video width="100%"
+           controls
+           preload="auto"
+           data-setup="{}">
+      <source [src]="modalRef.config.data['video_url']" type="video/mp4">
+    </video>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<table class="table">
+  <thead class="bg-light">
+  <tr>
+    <th>ID</th>
+<!--    <th class="text-center">Аватар</th>-->
+<!--    <th class="text-center">Фон</th>-->
+<!--    <th class="text-center">Голос</th>-->
+<!--    <th>Описание</th>-->
+<!--    <th>Видео</th>-->
+<!--    <th>Музыка</th>-->
+    <th>Удалить</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let project of projects">
+    <td>{{project.id}}</td>
+<!--    <td>{{video.avatarIndex}}</td>-->
+<!--    <td>{{video.backgroundIndex}}</td>-->
+<!--    <td>{{video.voiceIndex}}</td>-->
+<!--    <td>{{video.description}}</td>-->
+<!--    <td>{{video.videoUrl}}</td>-->
+<!--    <td>{{video.musicUrl}}</td>-->
+    <td>
+      <button class="a-delete"
+              (click)="onDeleteClick(project)">
+        <span class="material-symbols-sharp">delete</span>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
