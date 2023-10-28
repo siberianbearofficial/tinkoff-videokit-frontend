@@ -4,7 +4,7 @@
     {{error}}
   </div>
 </div>
-<div class="main-container" *ngIf="project && project.slides">
+<div class="main-container" *ngIf="project && notEditedProject && project.slides">
   <div class="top-side-container">
     <div class="left-side-container">
       <!--      <div class="left-side-container__header">-->
@@ -39,18 +39,29 @@
                      [avatarPosition]="project.slides[currentSlideIndex].avatarPosition"
                      [avatarScale]="project.slides[currentSlideIndex].avatarScale"
                      (avatarPositionEvent)="onAvatarPositionChange($event)"
-                     [backgroundImage]="project.slides[currentSlideIndex].background">
+                     [backgroundImage]="project.slides[currentSlideIndex].backgroundImage">
         </app-preview>
       </div>
       <div class="middle-side-container__footer">
-        <div class="button-round" (click)="onPlayButtonClick()">
+        <div class="button button-play" *ngIf="projectEquals(project, notEditedProject)" (click)="onPlayButtonClick()">
           <mat-icon>play_arrow</mat-icon>
+          Посмотреть результат
         </div>
-        <div class="button-round" (click)="onQrButtonClick()">
-          <mat-icon>qr_code</mat-icon>
+        <div *ngIf="!projectEquals(project, notEditedProject)" class="button-group">
+          <div class="button button-generate"
+               (click)="onGenerateButtonClick()">
+            <mat-icon>autorenew</mat-icon>
+            Отправить на перегенерацию
+          </div>
+          <div class="button-round"
+               (click)="onRollbackButtonClick()">
+            <mat-icon>undo</mat-icon>
+          </div>
         </div>
-        <div class="button-round" (click)="onGenerateButtonClick()">
-          <mat-icon>autorenew</mat-icon>
+        <div class="button button-download" *ngIf="projectEquals(project, notEditedProject)"
+             (click)="onQrButtonClick()">
+          <mat-icon>file_download</mat-icon>
+          Скачать готовое видео
         </div>
       </div>
     </div>
@@ -60,7 +71,7 @@
         <div class="property">
           <div class="property__header">Время на слайд</div>
           <div class="property__main text-field" *ngIf="project.slides">
-            <input type="text" class="input" [value]="project.slides[currentSlideIndex].time">
+            <input type="text" class="input" [value]="project.slides[currentSlideIndex].durationMs">
             сек
           </div>
         </div>
@@ -75,7 +86,8 @@
     </div>
   </div>
   <div class="bottom-side-container">
-    <app-slides-list [slides]="project.slides" [selectedIndex]="currentSlideIndex" (selectedIndexChange)="currentSlideIndex = $event"></app-slides-list>
+    <app-slides-list [slides]="project.slides" [selectedIndex]="currentSlideIndex"
+                     (selectedIndexChange)="currentSlideIndex = $event"></app-slides-list>
   </div>
   <div class="error" *ngIf="error">{{error}}</div>
 </div>
