@@ -17,35 +17,35 @@
         <qrcode [qrdata]="modalRef.config.data['video_url']" [width]="256" [errorCorrectionLevel]="'H'"></qrcode>
       </div>
     </div>
-    <div class="rate">
-      <div class="rate__header">Оцените работу сайта</div>
-      <div class="rate__stars">
-        <div class="rate__stars__star" (click)="setRateStarSelected(1)">
-          <mat-icon
-            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 0}">star
-          </mat-icon>
-        </div>
-        <div class="rate__stars__star" (click)="setRateStarSelected(2)">
-          <mat-icon
-            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 1}">star
-          </mat-icon>
-        </div>
-        <div class="rate__stars__star" (click)="setRateStarSelected(3)">
-          <mat-icon
-            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 2}">star
-          </mat-icon>
-        </div>
-        <div class="rate__stars__star" (click)="setRateStarSelected(4)">
-          <mat-icon
-            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 3}">star
-          </mat-icon>
-        </div>
-        <div class="rate__stars__star" (click)="setRateStarSelected(5)">
-          <mat-icon
-            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 4}">star
-          </mat-icon>
-        </div>
-      </div>
-    </div>
+<!--    <div class="rate">-->
+<!--      <div class="rate__header">Оцените работу сайта</div>-->
+<!--      <div class="rate__stars">-->
+<!--        <div class="rate__stars__star" (click)="setRateStarSelected(1)">-->
+<!--          <mat-icon-->
+<!--            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 0}">star-->
+<!--          </mat-icon>-->
+<!--        </div>-->
+<!--        <div class="rate__stars__star" (click)="setRateStarSelected(2)">-->
+<!--          <mat-icon-->
+<!--            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 1}">star-->
+<!--          </mat-icon>-->
+<!--        </div>-->
+<!--        <div class="rate__stars__star" (click)="setRateStarSelected(3)">-->
+<!--          <mat-icon-->
+<!--            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 2}">star-->
+<!--          </mat-icon>-->
+<!--        </div>-->
+<!--        <div class="rate__stars__star" (click)="setRateStarSelected(4)">-->
+<!--          <mat-icon-->
+<!--            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 3}">star-->
+<!--          </mat-icon>-->
+<!--        </div>-->
+<!--        <div class="rate__stars__star" (click)="setRateStarSelected(5)">-->
+<!--          <mat-icon-->
+<!--            [ngClass]="{'rate__stars__star__selected': rateStarSelected > 4}">star-->
+<!--          </mat-icon>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </div>
