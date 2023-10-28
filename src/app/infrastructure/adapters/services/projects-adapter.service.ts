@@ -49,25 +49,29 @@ export class ProjectsAdapterService {
         map((result: Object | string): Project => {
           const projectModel: ProjectModel = (typeof result == 'string') ? (JSON.parse(result as string) as ProjectModel) : (result as ProjectModel);
           let slides: Slide[] = [];
-          projectModel.slides.forEach((slideModel: SlideModel): void => {
+          projectModel.chunks.forEach((slideModel: SlideModel): void => {
             slides.push({
-              background: slideModel.background,
+              backgroundImage: slideModel.background_image,
               avatarPosition: slideModel.avatar_position,
               avatarScale: slideModel.avatar_scale,
               avatarType: slideModel.avatar_type,
-              time: slideModel.time
+              durationMs: slideModel.duration_ms,
+              text: slideModel.text,
+              updatedAt: slideModel.updated_at,
+              createdAt: slideModel.created_at
             });
           });
           return {
-            id: projectModel.id,
+            id: projectModel._id,
             userId: projectModel.user_id,
             processed: projectModel.processed,
-            avatarVideo: projectModel.avatar_video,
             processedVideo: projectModel.processed_video,
-            plan: projectModel.plan,
-            text: projectModel.text,
+            gptScenario: projectModel.gpt_scenario,
             mjImages: projectModel.mj_images,
-            slides: slides
+            slides: slides,
+            createdAt: projectModel.created_at,
+            updatedAt: projectModel.updated_at,
+            userPrompt: projectModel.user_prompt
           };
         })
       );
@@ -77,23 +81,28 @@ export class ProjectsAdapterService {
     let slideModels: SlideModel[] = [];
     project.slides.forEach((slide: Slide): void => {
       slideModels.push({
-        background: slide.background,
+        background_image: slide.backgroundImage,
         avatar_position: slide.avatarPosition,
         avatar_scale: slide.avatarScale,
         avatar_type: slide.avatarType,
-        time: slide.time
+        duration_ms: slide.durationMs,
+        text: slide.text,
+        updated_at: slide.updatedAt,
+        created_at: slide.createdAt
       });
     });
     const projectModel: ProjectModel = {
-      id: project.id,
+      _id: project.id,
       user_id: project.userId,
       processed: project.processed,
-      avatar_video: project.avatarVideo,
       processed_video: project.processedVideo,
-      plan: project.plan,
-      text: project.text,
+      gpt_scenario: project.gptScenario,
       mj_images: project.mjImages,
-      slides: slideModels
+      chunks: slideModels,
+      avatar_id: 1,
+      created_at: project.createdAt,
+      updated_at: project.updatedAt,
+      user_prompt: project.userPrompt
     };
     return this.projectsApi.putProject(project.id, projectModel)
       .pipe(

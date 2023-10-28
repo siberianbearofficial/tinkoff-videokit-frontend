@@ -1,13 +1,15 @@
 import {SlideModel} from "./slide-model";
 
 export interface ProjectModel {
-  id: string;
+  _id: string;
   user_id: string;
   processed: boolean;
-  avatar_video: string;
   processed_video: string;
-  plan: string;
-  text: string;
+  user_prompt: string;
+  gpt_scenario: string;
+  avatar_id: number;
   mj_images: Array<string>;
-  slides: Array<SlideModel>;
+  chunks: Array<SlideModel>;
+  updated_at: string;
+  created_at: string;
 }

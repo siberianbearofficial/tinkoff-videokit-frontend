@@ -4,10 +4,11 @@ export interface Project {
   id: string;
   userId: string;
   processed: boolean;
-  avatarVideo: string;
   processedVideo: string;
-  plan: string;
-  text: string;
+  gptScenario: string;
   mjImages: Array<string>;
   slides: Array<Slide>;
+  createdAt: string;
+  updatedAt: string;
+  userPrompt: string;
 }
