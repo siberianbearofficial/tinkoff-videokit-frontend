@@ -34,11 +34,47 @@ export class ProjectsAdapterService {
   //   );
   // }
 
-  public getProjects(): Observable<string[]> {
+  public getProjects(): Observable<Project[]> {
     return this.projectsApi.getProjects()
       .pipe(
-        map((result: Object | string): string[] => {
-          return (typeof result == 'string') ? (JSON.parse(result as string) as string[]) : (result as string[]);
+        map((result: Object | string): Project[] => {
+          let projectModels: ProjectModel[];
+          if (typeof result == 'string')
+            projectModels = JSON.parse(result as string) as ProjectModel[];
+          else
+            projectModels = result as ProjectModel[];
+
+          let projects: Project[] = [];
+          projectModels.forEach((projectModel: ProjectModel) => {
+            let slides: Slide[] = [];
+            projectModel.chunks.forEach((slideModel: SlideModel): void => {
+              slides.push({
+                backgroundImage: slideModel.background_image,
+                avatarPosition: slideModel.avatar_position,
+                avatarScale: slideModel.avatar_scale,
+                avatarType: slideModel.avatar_type,
+                durationMs: slideModel.duration_ms,
+                text: slideModel.text,
+                updatedAt: slideModel.updated_at,
+                createdAt: slideModel.created_at
+              });
+            });
+            const project: Project = {
+              id: projectModel._id,
+              userId: projectModel.user_id,
+              processed: projectModel.processed,
+              processedVideo: projectModel.processed_video,
+              gptScenario: projectModel.gpt_scenario,
+              mjImages: projectModel.mj_images,
+              slides: slides,
+              createdAt: projectModel.created_at,
+              updatedAt: projectModel.updated_at,
+              userPrompt: projectModel.user_prompt
+            };
+            projects.push(project);
+          });
+
+          return projects;
         })
       );
   }

@@ -81,7 +81,7 @@ export class ProjectsApiService {
   }
 
   public putProject(id: string, projectModel: ProjectModel) {
-    return this.http.put(`${BASE_API_URL}/${PROJECTS_URL}/${id}`, projectModel)
+    return this.http.patch(`${BASE_API_URL}/${PROJECTS_URL}/${id}`, projectModel)
       .pipe(catchError((error): Observable<never> => {
         switch (error.status) {
           case 0: {
