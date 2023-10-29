@@ -6,9 +6,14 @@
 .error {
   margin-top: 50px;
 
+  .heading {
+    color: $dark-color;
+  }
+
   .details {
     margin-top: 30px;
     text-align: center;
+    font-size: $fs-desktop-subheading;
   }
 }
 
@@ -17,6 +22,20 @@
   flex-flow: column;
   gap: 10px;
   height: 75vh;
+
+  .editing-disabled {
+    margin-top: 50px;
+    text-align: center;
+
+    .heading {
+      text-align: center;
+    }
+
+    .details {
+      margin-top: 30px;
+      font-size: $fs-desktop-subheading;
+    }
+  }
 
   .text-field {
     background-color: $input-color;

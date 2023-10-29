@@ -4,24 +4,15 @@
     {{error}}
   </div>
 </div>
-<div class="main-container" *ngIf="project && notEditedProject && project.slides">
+<div class="main-container" *ngIf="!error && editingDisabled">
+  <div class="editing-disabled">
+    <div class="heading">Запрос обрабатывается</div>
+    <div class="details">Видео генерируется. Когда генерация завершится, проект можно будет редактировать.</div>
+  </div>
+</div>
+<div class="main-container" *ngIf="!error && !editingDisabled && project && notEditedProject && project.slides">
   <div class="top-side-container">
     <div class="left-side-container">
-      <!--      <div class="left-side-container__header">-->
-      <!--        <div class="left-side-container__header__left">-->
-      <!--          <mat-icon (click)="onBackButtonClick()" style="cursor: pointer">arrow_back</mat-icon>-->
-      <!--          <div class="subheading">Проекты</div>-->
-      <!--        </div>-->
-      <!--        <div class="left-side-container__header__right">-->
-      <!--          <div class="qr">-->
-      <!--            <mat-icon>qr_code</mat-icon>-->
-      <!--          </div>-->
-      <!--          <button class="button" (click)="onPlayButtonClick()">-->
-      <!--            <mat-icon>play_arrow</mat-icon>-->
-      <!--            Смотреть-->
-      <!--          </button>-->
-      <!--        </div>-->
-      <!--      </div>-->
       <div class="left-side-container__header">
         <div class="subheading">Медиафайлы</div>
       </div>

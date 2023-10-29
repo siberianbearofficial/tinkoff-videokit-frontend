@@ -36,6 +36,8 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
 
   public currentSlideIndex: number = 0;
 
+  public editingDisabled: boolean = true;
+
   constructor(private projectsService: ProjectsService,
               // private redirectService: RedirectService,
               private modalService: Dialog,
@@ -72,14 +74,16 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
           this.project = project;
           this.notEditedProject = this.copyProject(project);
           this.hideError();
+          this.editingDisabled = false;
 
-          if (!this.project.processed && this.project.id)
+          if (!this.project.processed)
             this.startProjectPolling(project);
         }
       })
   }
 
   private startProjectPolling(project: Project): void {
+    this.editingDisabled = true;
     this.projectPollingSubscription = timer(0, 1000)
       .pipe(
         concatMap(_ => this.projectsService.getProject(project.id)),
@@ -97,14 +101,17 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
 
           this.hideError();
 
-          if (project.processed)
+          if (project.processed) {
             this.projectPollingSubscription.unsubscribe();
+            this.editingDisabled = false;
+          }
         }
       });
   }
 
   public onGenerateButtonClick(): void {
     if (this.project) {
+      this.editingDisabled = true;
       this.updateProjectSubscription = this.projectsService.updateProject(this.project)
         .pipe(
           catchError((error: Error) => {
