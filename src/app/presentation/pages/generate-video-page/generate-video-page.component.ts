@@ -11,7 +11,6 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 import {ShareVideoModalComponent} from "../../shared/components/share-video-modal/share-video-modal.component";
 import {Point} from "@angular/cdk/drag-drop";
 import {Slide} from "../../../core/domain/entities/slide";
-import * as http from "http";
 
 
 const EPS: number = 0.001;
@@ -91,8 +90,11 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
       )
       .subscribe((project: Project | boolean): void => {
         if (typeof project != 'boolean') {
-          this.project = project;
-          this.notEditedProject = this.copyProject(project);
+          if (!this.project || (this.project && !this.projectEquals(this.project, project))) {
+            this.project = project;
+            this.notEditedProject = this.copyProject(project);
+          }
+
           this.hideError();
 
           if (project.processed)
