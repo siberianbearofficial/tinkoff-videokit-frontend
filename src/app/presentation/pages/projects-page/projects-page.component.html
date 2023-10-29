@@ -1,8 +1,17 @@
 <div class="container">
   <div class="heading">Проекты</div>
-  <div class="projects" *ngIf="projectIds">
-    <div class="project" routerLink="/projects/{{projectId}}" *ngFor="let projectId of projectIds">
-      {{projectId}}
+  <div class="projects" *ngIf="projects">
+    <div class="project"
+         routerLink="/projects/{{project.id}}"
+         *ngFor="let project of projects">
+      <div class="project__id">{{project.id}}</div>
+      <div class="project__processed" [ngClass]="{
+      'processed-badge': project.processed,
+      'unprocessed-badge': !project.processed
+      }">
+        <span *ngIf="project.processed"><mat-icon>done</mat-icon> Сгенерировано</span>
+        <span *ngIf="!project.processed"><mat-icon>sync</mat-icon> На генерации</span>
+      </div>
     </div>
   </div>
 </div>
