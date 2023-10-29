@@ -14,7 +14,7 @@
   <div class="top-side-container">
     <div class="left-side-container">
       <div class="left-side-container__header">
-        <div class="subheading">Медиафайлы</div>
+        <div class="subheading">Фон слайда</div>
       </div>
       <div class="left-side-container__main">
         <app-images-list
@@ -57,22 +57,21 @@
       </div>
     </div>
     <div class="right-side-container">
-      <div class="subheading">Свойства</div>
+      <div class="subheading">Свойства слайда</div>
       <div class="properties">
         <div class="property">
-          <div class="property__header">Время на слайд</div>
+          <div class="property__header">Время</div>
           <div class="property__main text-field" *ngIf="project.slides">
             <input type="text" class="input" [value]="project.slides[currentSlideIndex].durationMs">
-            сек
+            мс
           </div>
         </div>
-        <!--        <div class="property">-->
-        <!--          <div class="property__header">Расположение аватара</div>-->
-        <!--          <div class="property__main">-->
-        <!--            <button class="button-sm"-->
-        <!--                    (click)="onChangeAvatarPositionButtonClick()">{{avatarTypes[project.slides[currentSlideIndex].avatarType]}}</button>-->
-        <!--          </div>-->
-        <!--        </div>-->
+        <div class="property full-height" *ngIf="project.slides[currentSlideIndex].text">
+          <div class="property__header">Текст</div>
+          <div class="property__main">
+            <textarea readonly class="text" [value]="project.slides[currentSlideIndex].text"></textarea>
+          </div>
+        </div>
       </div>
     </div>
   </div>

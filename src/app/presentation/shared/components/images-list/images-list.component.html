@@ -1,9 +1,9 @@
 <div class="container">
   <div class="backgrounds">
-    <div class="background" *ngFor="let mediaUrl of mediaUrls; let i = index"
-         [ngClass]="{'background-selected': selectedIndex == i}"
+    <div class="backgrounds__item" *ngFor="let mediaUrl of mediaUrls; let i = index"
+         [ngClass]="{'backgrounds__item-selected': selectedIndex == i}"
          (click)="selectImage(i)">
-      <img [src]="mediaUrl" alt="background">
+      <img [src]="mediaUrl" alt="Background">
     </div>
   </div>
 </div>

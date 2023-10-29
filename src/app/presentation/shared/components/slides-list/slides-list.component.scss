@@ -1,4 +1,6 @@
 @import "../../../../../colors";
+@import "../../../../../weights";
+@import "../../../../../sizes";
 
 
 .container {
@@ -6,15 +8,22 @@
   height: 100%;
 
   .slides {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
 
     &__item {
+      display: inline-block;
+      margin-right: 10px;
       width: 192px;
       height: 108px;
       border-radius: 5px;
-      overflow: clip;
+      overflow: hidden;
+      position: relative;
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       img {
         width: 192px;
@@ -27,6 +36,24 @@
       &-selected, &:hover {
         border: 5px solid $accent-dark-color;
         cursor: pointer;
+      }
+
+      &-num {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+
+        &__inner {
+          font-weight: $fw-bold;
+          font-size: $fs-desktop-heading;
+          color: white;
+        }
       }
     }
   }
