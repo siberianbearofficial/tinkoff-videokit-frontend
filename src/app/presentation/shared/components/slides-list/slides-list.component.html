@@ -4,7 +4,7 @@
          class="slides__item"
          [ngClass]="{'slides__item-selected': selectedIndex == i}"
          (click)="selectSlide(i)">
-      <img [src]="slide.backgroundImage" alt="Slide">
+      <img [src]="slide.backgroundImageChoicePaths[slide.backgroundImage]" alt="Slide">
       <div class="slides__item-num">
         <span class="slides__item-num__inner">{{ i + 1 }}</span>
       </div>

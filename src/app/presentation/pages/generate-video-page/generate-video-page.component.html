@@ -18,19 +18,25 @@
       </div>
       <div class="left-side-container__main">
         <app-images-list
-          [mediaUrls]="project.mjImages"
-          [selectedIndex]="getBackgroundUrlIndex()"
-          (selectedImageIndexChange)="onBackgroundImageChange($event)">
+          [mediaUrls]="project.slides[currentSlideIndex].backgroundImageChoicePaths"
+          [selectedIndex]="project.slides[currentSlideIndex].backgroundImage"
+          (selectedImageIndexChange)="project.slides[currentSlideIndex].backgroundImage = $event">
         </app-images-list>
       </div>
     </div>
     <div class="middle-side-container">
       <div class="middle-side-container__main">
         <app-preview avatarImage="assets/img/thara-man.png"
-                     [avatarPosition]="project.slides[currentSlideIndex].avatarPosition"
+                     [avatarRectangle]="{
+                     topLeftPoint: project.slides[currentSlideIndex].avatarPosition,
+                     bottomRightPoint: {
+                     x: project.slides[currentSlideIndex].avatarPosition.x + 400,
+                     y: project.slides[currentSlideIndex].avatarPosition.y + 400
+                     }
+                     }"
                      [avatarScale]="project.slides[currentSlideIndex].avatarScale"
-                     (avatarPositionEvent)="onAvatarPositionChange($event)"
-                     [backgroundImage]="project.slides[currentSlideIndex].backgroundImage">
+                     (avatarRectangleEvent)="onAvatarRectangleChange($event)"
+                     [backgroundImage]="project.slides[currentSlideIndex].backgroundImageChoicePaths[project.slides[currentSlideIndex].backgroundImage]">
         </app-preview>
       </div>
       <div class="middle-side-container__footer">

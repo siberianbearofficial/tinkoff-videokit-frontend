@@ -1,15 +1,17 @@
-<div (window:resize)="afterInit()"></div>
+<div (window:resize)="calculateWeight()"></div>
 <div class="bg-image w-100" #imageContainer>
-  <div class="avatar"
-       *ngIf="initialAvatarRectangle && relativeAvatarRectangle && avatarScale"
+  <img *ngIf="avatarImage && avatarRectangle && avatarScale"
+       [src]="avatarImage"
+       alt="avatar"
+       class="avatar"
        cdkDrag
        [cdkDragBoundary]="imageContainer"
+       (cdkDragStarted)="avatarRelativeRectangle = calculateRelativeAvatarRectangle(avatarRectangle)"
        (cdkDragMoved)="onAvatarRectangleDrag($event)"
        (cdkDragEnded)="onAvatarRectangleDragEnd()"
-       [cdkDragFreeDragPosition]="initialAvatarRectangle.topLeftPoint"
+       [cdkDragFreeDragPosition]="avatarRelativeRectangle ? avatarRelativeRectangle.topLeftPoint : avatarRectangle.topLeftPoint"
        [ngStyle]="{
-        'width': ((relativeAvatarRectangle.bottomRightPoint.x - relativeAvatarRectangle.topLeftPoint.x) * avatarScale).toString() + 'px',
-        'height': ((relativeAvatarRectangle.bottomRightPoint.y - relativeAvatarRectangle.topLeftPoint.y) * avatarScale).toString() + 'px',
+        'width': avatarWidth(avatarRectangle, avatarScale),
+        'height': avatarHeight(avatarRectangle, avatarScale)
         }">
-  </div>
 </div>

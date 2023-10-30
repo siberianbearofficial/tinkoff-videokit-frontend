@@ -2,10 +2,12 @@ import {Slide} from "./slide";
 
 export interface Project {
   id: string;
-  userId: string;
-  processed: boolean;
-  processedVideo: string;
+  ownerId: string;
+  status: string;
+  videoPath?: string;
+  videoLink?: string;
   gptScenario: string;
+  sceneTemplate: string;
   mjImages: Array<string>;
   slides: Array<Slide>;
   createdAt: string;

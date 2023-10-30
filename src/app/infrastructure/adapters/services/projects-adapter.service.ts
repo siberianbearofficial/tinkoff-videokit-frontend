@@ -40,9 +40,17 @@ export class ProjectsAdapterService {
         map((result: Object | string): Project[] => {
           let projectModels: ProjectModel[];
           if (typeof result == 'string')
-            projectModels = JSON.parse(result as string) as ProjectModel[];
+            projectModels = (JSON.parse(result as string) as {
+              ok: boolean,
+              code: number,
+              data: ProjectModel[]
+            }).data;
           else
-            projectModels = result as ProjectModel[];
+            projectModels = (result as {
+              ok: boolean,
+              code: number,
+              data: ProjectModel[]
+            }).data;
 
           let projects: Project[] = [];
           projectModels.forEach((projectModel: ProjectModel) => {
@@ -52,21 +60,30 @@ export class ProjectsAdapterService {
                 backgroundImage: slideModel.background_image,
                 avatarPosition: slideModel.avatar_position,
                 avatarScale: slideModel.avatar_scale,
-                avatarType: slideModel.avatar_type,
                 durationMs: slideModel.duration_ms,
                 text: slideModel.text,
                 updatedAt: slideModel.updated_at,
-                createdAt: slideModel.created_at
+                createdAt: slideModel.created_at,
+                backgroundImageChoiceLinks: slideModel.background_image_choice_links,
+                backgroundImageChoicePaths: slideModel.background_image_choice_paths,
+                retries: slideModel.retries,
+                sceneTemplate: slideModel.scene_template,
+                status: slideModel.status,
+                taskId: slideModel.task_id,
+                videoLink: slideModel.video_link,
+                videoPath: slideModel.video_path
               });
             });
             const project: Project = {
               id: projectModel._id,
-              userId: projectModel.user_id,
-              processed: projectModel.processed,
-              processedVideo: projectModel.processed_video,
+              ownerId: projectModel.owner_id,
+              status: projectModel.status,
+              videoPath: projectModel.video_path,
+              videoLink: projectModel.video_link,
               gptScenario: projectModel.gpt_scenario,
               mjImages: projectModel.mj_images,
               slides: slides,
+              sceneTemplate: projectModel.scene_template,
               createdAt: projectModel.created_at,
               updatedAt: projectModel.updated_at,
               userPrompt: projectModel.user_prompt
@@ -83,28 +100,51 @@ export class ProjectsAdapterService {
     return this.projectsApi.getProject(id)
       .pipe(
         map((result: Object | string): Project => {
-          const projectModel: ProjectModel = (typeof result == 'string') ? (JSON.parse(result as string) as ProjectModel) : (result as ProjectModel);
+          let projectModel: ProjectModel;
+          if (typeof result == 'string') {
+            projectModel = (JSON.parse(result as string) as {
+              ok: boolean,
+              code: number,
+              data: ProjectModel
+            }).data;
+          }
+          else {
+            projectModel = (result as {
+              ok: boolean,
+              code: number,
+              data: ProjectModel
+            }).data;
+          }
           let slides: Slide[] = [];
           projectModel.chunks.forEach((slideModel: SlideModel): void => {
             slides.push({
               backgroundImage: slideModel.background_image,
               avatarPosition: slideModel.avatar_position,
               avatarScale: slideModel.avatar_scale,
-              avatarType: slideModel.avatar_type,
               durationMs: slideModel.duration_ms,
               text: slideModel.text,
               updatedAt: slideModel.updated_at,
-              createdAt: slideModel.created_at
+              createdAt: slideModel.created_at,
+              backgroundImageChoiceLinks: slideModel.background_image_choice_links,
+              backgroundImageChoicePaths: slideModel.background_image_choice_paths,
+              retries: slideModel.retries,
+              sceneTemplate: slideModel.scene_template,
+              status: slideModel.status,
+              taskId: slideModel.task_id,
+              videoLink: slideModel.video_link,
+              videoPath: slideModel.video_path
             });
           });
           return {
             id: projectModel._id,
-            userId: projectModel.user_id,
-            processed: projectModel.processed,
-            processedVideo: projectModel.processed_video,
+            ownerId: projectModel.owner_id,
+            status: projectModel.status,
+            videoPath: projectModel.video_path,
+            videoLink: projectModel.video_link,
             gptScenario: projectModel.gpt_scenario,
             mjImages: projectModel.mj_images,
             slides: slides,
+            sceneTemplate: projectModel.scene_template,
             createdAt: projectModel.created_at,
             updatedAt: projectModel.updated_at,
             userPrompt: projectModel.user_prompt
@@ -118,24 +158,32 @@ export class ProjectsAdapterService {
     project.slides.forEach((slide: Slide): void => {
       slideModels.push({
         background_image: slide.backgroundImage,
+        background_image_choice_links: slide.backgroundImageChoiceLinks,
+        background_image_choice_paths: slide.backgroundImageChoicePaths,
         avatar_position: slide.avatarPosition,
         avatar_scale: slide.avatarScale,
-        avatar_type: slide.avatarType,
         duration_ms: slide.durationMs,
         text: slide.text,
+        video_path: slide.videoPath,
+        video_link: slide.videoLink,
+        status: slide.status,
+        retries: slide.retries,
+        task_id: slide.taskId,
+        scene_template: slide.sceneTemplate,
         updated_at: slide.updatedAt,
         created_at: slide.createdAt
       });
     });
     const projectModel: ProjectModel = {
       _id: project.id,
-      user_id: project.userId,
-      processed: project.processed,
-      processed_video: project.processedVideo,
+      owner_id: project.ownerId,
+      status: project.status,
+      video_path: project.videoPath,
+      video_link: project.videoLink,
       gpt_scenario: project.gptScenario,
       mj_images: project.mjImages,
       chunks: slideModels,
-      avatar_id: 1,
+      scene_template: project.sceneTemplate,
       created_at: project.createdAt,
       updated_at: project.updatedAt,
       user_prompt: project.userPrompt

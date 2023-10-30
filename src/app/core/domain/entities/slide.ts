@@ -1,10 +1,17 @@
 import {Point} from "@angular/cdk/drag-drop";
 
 export interface Slide {
-  backgroundImage: string;
+  backgroundImage: number;
+  backgroundImageChoiceLinks: Array<string>;
+  backgroundImageChoicePaths: Array<string>;
   avatarPosition: Point;
   avatarScale: number;
-  avatarType: number;
+  retries: number;
+  status: string;
+  videoLink?: string;
+  videoPath?: string;
+  taskId: string;
+  sceneTemplate: string;
   durationMs: number;
   updatedAt: string;
   createdAt: string;

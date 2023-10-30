@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {ProjectModel} from "../models/project-model";
 
-const BASE_API_URL: string = '/api/v1';
+const BASE_API_URL: string = '/api';
 const PROJECTS_URL: string = 'projects';
 
 @Injectable({

@@ -1,16 +1,17 @@
 <div class="container">
   <div class="heading">Проекты</div>
+  <div class="subheading" *ngIf="!projects">Пока здесь ничего нет. Добавить проект можно через Telegram бота.</div>
   <div class="projects" *ngIf="projects">
     <div class="project"
          routerLink="/projects/{{project.id}}"
          *ngFor="let project of projects">
       <div class="project__id">{{project.id}}</div>
       <div class="project__processed" [ngClass]="{
-      'processed-badge': project.processed,
-      'unprocessed-badge': !project.processed
+      'processed-badge': project.status == 'DONE',
+      'unprocessed-badge': project.status != 'DONE'
       }">
-        <span *ngIf="project.processed"><mat-icon>done</mat-icon> Сгенерировано</span>
-        <span *ngIf="!project.processed"><mat-icon>sync</mat-icon> На генерации</span>
+        <span *ngIf="project.status == 'DONE'"><mat-icon>done</mat-icon> Сгенерировано</span>
+        <span *ngIf="project.status != 'DONE'"><mat-icon>sync</mat-icon> На генерации</span>
       </div>
     </div>
   </div>
