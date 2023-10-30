@@ -26,7 +26,6 @@ export class PreviewComponent implements AfterViewInit {
   }
 
   @Input() set backgroundImage(value: string) {
-    console.log('Set background image');
     this._backgroundImage = value;
     if (this.image && this.imageContainerQuery)
       this.renderer.removeChild(this.imageContainerQuery.nativeElement, this.image);
@@ -48,7 +47,6 @@ export class PreviewComponent implements AfterViewInit {
   }
 
   @Input() set avatarRectangle(value: Rectangle) {
-    console.log('Set avatar rectangle');
     this._avatarRectangle = value;
     this.avatarRelativeRectangle = this.calculateRelativeAvatarRectangle(value);
   }
@@ -72,7 +70,6 @@ export class PreviewComponent implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    console.log('After view init');
     if (this.image && this.imageContainerQuery && this.imageLoaded) {
       this.image.style.width = '100%';
       this.renderer.appendChild(this.imageContainerQuery.nativeElement, this.image);
@@ -120,14 +117,6 @@ export class PreviewComponent implements AfterViewInit {
     }
   }
 
-  public avatarLeft(avatar: Rectangle): string {
-    return `${this.calculateRelativeAvatarRectangle(avatar).topLeftPoint.x}px`;
-  }
-
-  public avatarTop(avatar: Rectangle): string {
-    return `${this.calculateRelativeAvatarRectangle(avatar).topLeftPoint.y}px`;
-  }
-
   public avatarWidth(avatar: Rectangle, scale: number): string {
     return `${this.rectangleWidth(this.calculateRelativeAvatarRectangle(avatar)) * scale}px`;
   }
@@ -139,7 +128,6 @@ export class PreviewComponent implements AfterViewInit {
   public calculateWeight(): void {
     if (this.image && this.imageOriginalWidth) {
       const w = this.image.offsetWidth / this.imageOriginalWidth;
-      console.log(w);
       this.imageCoordinates.setWeight(w);
     }
   }
