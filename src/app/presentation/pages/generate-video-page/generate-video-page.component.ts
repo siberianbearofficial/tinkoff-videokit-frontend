@@ -157,7 +157,7 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
         panelClass: 'modal-container',
         width: "40%",
         data: {
-          'video_url': this.project.videoPath
+          'video_url': this.project.videoLink
         }
       }).closed.subscribe();
     }
