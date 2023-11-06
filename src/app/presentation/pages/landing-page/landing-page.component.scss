@@ -40,7 +40,7 @@ main {
   .boring-text-container {
     padding-top: 50px;
     display: flex;
-    justify-content: space-between;
+    gap: 200px;
 
     .boring-text-container__text-container {
       display: flex;
@@ -52,15 +52,11 @@ main {
         text-align: left;
       }
     }
-
-    .boring-text-container__video-container {
-      width: 45%;
-    }
   }
 
   .advantages-container {
     display: flex;
-    justify-content: space-between;
+    gap: 200px;
 
     .advantages-container__text-container {
       width: 45%;
@@ -88,10 +84,6 @@ main {
           }
         }
       }
-    }
-
-    .advantages-container__video-container {
-      width: 45%;
     }
   }
 

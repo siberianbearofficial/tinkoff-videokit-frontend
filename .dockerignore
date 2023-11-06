@@ -1,0 +1,7 @@
+.idea
+.gitignore
+.git
+.editorconfig
+dist
+README.md
+src/proxy.conf.json

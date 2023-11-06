@@ -37,8 +37,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/bcryptjs/dist/bcrypt.js",
-              "node_modules/video.js/dist/video.js"
+              "node_modules/bcryptjs/dist/bcrypt.js"
             ]
           },
           "configurations": {
