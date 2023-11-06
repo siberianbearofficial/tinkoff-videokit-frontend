@@ -17,8 +17,8 @@ import {Rectangle} from "../../../../core/domain/entities/rectangle";
 })
 export class PreviewComponent implements AfterViewInit {
 
-  public avatarOriginalWidth: number = 400;
-  public avatarOriginalHeight: number = 400;
+  public avatarOriginalWidth: number = 300;
+  public avatarOriginalHeight: number = 300;
 
   public _backgroundImage: string = '';
   get backgroundImage(): string {
