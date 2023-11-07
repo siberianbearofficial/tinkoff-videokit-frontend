@@ -3,6 +3,7 @@ import {catchError, concatMap, of, Subscription, timer} from "rxjs";
 import {ProjectsService} from "../../../core/usecases/interactors/projects.service";
 import {Project} from "../../../core/domain/entities/project";
 import * as lodash from "lodash";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-projects-page',
@@ -15,6 +16,8 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   public error: string = '';
 
   public projects?: Project[];
+  public processedProjects?: Project[];
+  public unprocessedProjects?: Project[];
 
   constructor(private projectsService: ProjectsService) {
   }
@@ -31,7 +34,7 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
       .subscribe((projects: Project[] | boolean): void => {
         if (typeof projects != 'boolean') {
           if (!this.projects || (this.projects && !this.projectsEquals(this.projects, projects)))
-            this.projects = projects;
+            this.setProjects(projects);
           this.hideError();
         }
       });
@@ -58,8 +61,42 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
     this.error = '';
   }
 
+  private processedFilter(project: Project): boolean {
+    return project.status == 'DONE';
+  }
+
+  private unprocessedFilter(project: Project): boolean {
+    return project.status != 'DONE';
+  }
+
+  public setProjects(projects: Project[]): void {
+    this.projects = projects;
+    this.processedProjects = projects ? this.projects.filter(this.processedFilter).sort(this.comparator) : undefined;
+    this.unprocessedProjects = projects ? this.projects.filter(this.unprocessedFilter).sort(this.comparator) : undefined;
+  }
+
+  private comparator(a: Project, b: Project): number {
+    return moment(a.updatedAt).unix() - moment(b.updatedAt).unix();
+  }
+
+  public getProjectId(id: string): string {
+    return `${id.slice(id.length - 3, id.length)}`;
+  }
+
+  public getProjectDate(updatedAt: string): string {
+    const timeDate = moment(updatedAt).toDate();
+    return `${timeDate.getDay()}.${timeDate.getMonth()}`;
+  }
+
+  public getProjectTime(updatedAt: string): string {
+    const timeString = moment(updatedAt).toDate().toTimeString();
+    return `${timeString.slice(0, timeString.indexOf(':', 3))}`;
+  }
+
   public ngOnDestroy(): void {
     if (this.projectsPollingSubscription)
       this.projectsPollingSubscription.unsubscribe();
   }
+
+  protected readonly moment = moment;
 }

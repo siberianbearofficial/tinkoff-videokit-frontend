@@ -11,79 +11,77 @@
   </div>
 </div>
 <div class="main-container" *ngIf="!error && !editingDisabled && project && notEditedProject && project.slides">
-  <div class="top-side-container">
-    <div class="left-side-container">
-      <div class="left-side-container__header">
-        <div class="subheading">Фон слайда</div>
-      </div>
-      <div class="left-side-container__main">
-        <app-images-list
-          [mediaUrls]="project.slides[currentSlideIndex].backgroundImageChoicePaths"
-          [selectedIndex]="project.slides[currentSlideIndex].backgroundImage"
-          (selectedImageIndexChange)="project.slides[currentSlideIndex].backgroundImage = $event">
-        </app-images-list>
-      </div>
+  <div class="left-side-container">
+    <div class="left-side-container__header">
+      <div class="subheading">Фон слайда</div>
     </div>
-    <div class="middle-side-container">
-      <div class="middle-side-container__main">
-        <app-preview avatarImage="assets/img/thara-man-round.png"
-                     [avatarRectangle]="{
+    <div class="left-side-container__main">
+      <app-images-list
+        [mediaUrls]="project.slides[currentSlideIndex].backgroundImageChoicePaths"
+        [selectedIndex]="project.slides[currentSlideIndex].backgroundImage"
+        (selectedImageIndexChange)="project.slides[currentSlideIndex].backgroundImage = $event">
+      </app-images-list>
+    </div>
+  </div>
+  <div class="middle-side-container">
+    <div class="middle-side-container__header">
+      <app-preview avatarImage="assets/img/thara-man-round.png"
+                   [avatarRectangle]="{
                      topLeftPoint: project.slides[currentSlideIndex].avatarPosition,
                      bottomRightPoint: {
                      x: project.slides[currentSlideIndex].avatarPosition.x + 300,
                      y: project.slides[currentSlideIndex].avatarPosition.y + 300
                      }
                      }"
-                     [avatarScale]="project.slides[currentSlideIndex].avatarScale"
-                     (avatarRectangleEvent)="onAvatarRectangleChange($event)"
-                     [backgroundImage]="project.slides[currentSlideIndex].backgroundImageChoicePaths[project.slides[currentSlideIndex].backgroundImage]">
-        </app-preview>
+                   [avatarScale]="project.slides[currentSlideIndex].avatarScale"
+                   (avatarRectangleEvent)="onAvatarRectangleChange($event)"
+                   [backgroundImage]="project.slides[currentSlideIndex].backgroundImageChoicePaths[project.slides[currentSlideIndex].backgroundImage]">
+      </app-preview>
+    </div>
+    <div class="middle-side-container__main">
+      <div class="button button-play" *ngIf="projectEquals(project, notEditedProject)" (click)="onPlayButtonClick()">
+        <mat-icon>play_arrow</mat-icon>
+        Посмотреть результат
       </div>
-      <div class="middle-side-container__footer">
-        <div class="button button-play" *ngIf="projectEquals(project, notEditedProject)" (click)="onPlayButtonClick()">
-          <mat-icon>play_arrow</mat-icon>
-          Посмотреть результат
+      <div *ngIf="!projectEquals(project, notEditedProject)" class="button-group">
+        <div class="button button-generate"
+             (click)="onGenerateButtonClick()">
+          <mat-icon>autorenew</mat-icon>
+          Отправить на перегенерацию
         </div>
-        <div *ngIf="!projectEquals(project, notEditedProject)" class="button-group">
-          <div class="button button-generate"
-               (click)="onGenerateButtonClick()">
-            <mat-icon>autorenew</mat-icon>
-            Отправить на перегенерацию
-          </div>
-          <div class="button-round"
-               (click)="onRollbackButtonClick()">
-            <mat-icon>undo</mat-icon>
-          </div>
+        <div class="button-round"
+             (click)="onRollbackButtonClick()">
+          <mat-icon>undo</mat-icon>
         </div>
-        <div class="button button-download" *ngIf="projectEquals(project, notEditedProject)"
-             (click)="onQrButtonClick()">
-          <mat-icon>file_download</mat-icon>
-          Скачать готовое видео
-        </div>
+      </div>
+      <div class="button button-download" *ngIf="projectEquals(project, notEditedProject)"
+           (click)="onQrButtonClick()">
+        <mat-icon>file_download</mat-icon>
+        Скачать готовое видео
       </div>
     </div>
-    <div class="right-side-container">
-      <div class="subheading">Свойства слайда</div>
-      <div class="properties">
-        <div class="property">
-          <div class="property__header">Время</div>
-          <div class="property__main text-field" *ngIf="project.slides">
-            <input type="text" class="input" [value]="project.slides[currentSlideIndex].durationMs">
-            мс
-          </div>
-        </div>
-        <div class="property full-height" *ngIf="project.slides[currentSlideIndex].text">
-          <div class="property__header">Текст</div>
-          <div class="property__main">
-            <textarea readonly class="text" [value]="project.slides[currentSlideIndex].text"></textarea>
-          </div>
-        </div>
-      </div>
+    <div class="middle-side-container__footer">
+      <app-slides-list [slides]="project.slides" [selectedIndex]="currentSlideIndex"
+                       (selectedIndexChange)="currentSlideIndex = $event"></app-slides-list>
     </div>
   </div>
-  <div class="bottom-side-container">
-    <app-slides-list [slides]="project.slides" [selectedIndex]="currentSlideIndex"
-                     (selectedIndexChange)="currentSlideIndex = $event"></app-slides-list>
+  <div class="right-side-container">
+    <div class="subheading">Свойства слайда</div>
+    <div class="properties">
+      <div class="property">
+        <div class="property__header">Время</div>
+        <div class="property__main text-field active" *ngIf="project.slides">
+          <input type="text" class="input" [value]="project.slides[currentSlideIndex].durationMs">
+          мс
+        </div>
+      </div>
+      <div class="property full-height" *ngIf="project.slides[currentSlideIndex].text">
+        <div class="property__header">Текст</div>
+        <div class="property__main inactive">
+          <textarea readonly class="text inactive" [value]="project.slides[currentSlideIndex].text"></textarea>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="error" *ngIf="error">{{error}}</div>
 </div>

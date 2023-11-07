@@ -8,57 +8,86 @@
   flex-flow: column;
   gap: 20px;
 
-  .heading, .subheading {
-    text-align: left;
+  .subheading {
+    font-weight: $fw-bold;
+
+    span {
+      gap: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .processed {
+      color: $green-color;
+    }
+
+    .unprocessed {
+      color: $red-color;
+    }
   }
 
   .projects {
     display: flex;
-    flex-wrap: wrap;
+    gap: 20px;
 
-    .project {
-      cursor: pointer;
-      font-size: $fs-desktop-subheading;
-      font-weight: $fw-bold;
-      background: $input-color;
+    .separator {
+      border-left: 3px solid $input-dark-color;
+    }
+  }
+
+  .left-side-container, .right-side-container {
+    width: 49%;
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+
+    .separator {
+      border-top: 3px solid $input-dark-color;
+    }
+  }
+
+  .project {
+    cursor: pointer;
+    font-size: $fs-desktop-subheading;
+    font-weight: $fw-bold;
+    background: $input-color;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+
+    &__id {
+
+    }
+
+    &__processed {
+      border: 2px solid;
       border-radius: 5px;
       padding: 5px 10px;
-      display: flex;
-      gap: 30px;
-      align-items: center;
-      max-width: 49%;
+      font-size: $fs-desktop-label;
+      background: $white-color;
 
-      &__id {
-
+      span {
+        display: flex;
+        gap: 10px;
+        align-items: center;
       }
+    }
 
-      &__processed {
-        border: 2px solid;
-        border-radius: 5px;
-        padding: 5px 10px;
-        font-size: $fs-desktop-label;
-        background: $white-color;
+    .processed-badge {
+      border-color: $green-color;
+      color: $green-color;
+    }
 
-        span {
-          display: flex;
-          gap: 10px;
-          align-items: center;
-        }
-      }
+    .unprocessed-badge {
+      border-color: $red-color;
+      color: $red-color;
+    }
 
-      .processed-badge {
-        border-color: $green-color;
-        color: $green-color;
-      }
-
-      .unprocessed-badge {
-        border-color: $red-color;
-        color: $red-color;
-      }
-
-      &:hover {
-        background: $input-dark-color;
-      }
+    &:hover {
+      background: $input-dark-color;
     }
   }
 }

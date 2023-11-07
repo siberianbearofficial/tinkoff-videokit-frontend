@@ -1,17 +1,32 @@
 <div class="container">
   <div class="heading">Проекты</div>
   <div class="subheading" *ngIf="!projects">Пока здесь ничего нет. Добавить проект можно через Telegram бота.</div>
-  <div class="projects" *ngIf="projects">
-    <div class="project"
-         routerLink="/projects/{{project.id}}"
-         *ngFor="let project of projects">
-      <div class="project__id">{{project.id}}</div>
-      <div class="project__processed" [ngClass]="{
-      'processed-badge': project.status == 'DONE',
-      'unprocessed-badge': project.status != 'DONE'
-      }">
-        <span *ngIf="project.status == 'DONE'"><mat-icon>done</mat-icon> Сгенерировано</span>
-        <span *ngIf="project.status != 'DONE'"><mat-icon>sync</mat-icon> На генерации</span>
+  <div class="projects" *ngIf="unprocessedProjects">
+    <div class="left-side-container">
+      <div class="subheading"><span class="unprocessed"><mat-icon>sync</mat-icon> На генерации</span></div>
+      <div class="separator"></div>
+      <div class="project"
+           routerLink="/projects/{{project.id}}"
+           *ngFor="let project of unprocessedProjects">
+        <div class="project__id">{{getProjectId(project.id)}}</div>
+        <div class="separator"></div>
+        <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
+        <div class="separator"></div>
+        <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="right-side-container">
+      <div class="subheading"><span class="processed"><mat-icon>done</mat-icon> Сгенерировано</span></div>
+      <div class="separator"></div>
+      <div class="project"
+           routerLink="/projects/{{project.id}}"
+           *ngFor="let project of processedProjects">
+        <div class="project__id">{{getProjectId(project.id)}}</div>
+        <div class="separator"></div>
+        <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
+        <div class="separator"></div>
+        <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
       </div>
     </div>
   </div>

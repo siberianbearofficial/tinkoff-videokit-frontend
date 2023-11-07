@@ -20,6 +20,9 @@ export class PreviewComponent implements AfterViewInit {
   public avatarOriginalWidth: number = 300;
   public avatarOriginalHeight: number = 300;
 
+  public imageOriginalWidth: number = 1920;
+  public imageOriginalHeight: number = 1080;
+
   public _backgroundImage: string = '';
   get backgroundImage(): string {
     return this._backgroundImage;
@@ -27,16 +30,22 @@ export class PreviewComponent implements AfterViewInit {
 
   @Input() set backgroundImage(value: string) {
     this._backgroundImage = value;
-    if (this.image && this.imageContainerQuery)
-      this.renderer.removeChild(this.imageContainerQuery.nativeElement, this.image);
-    this.image = new Image();
-    this.image.src = value;
-    this.image.onload = () => {
-      if (this.image) {
-        this.imageOriginalWidth = this.image.width;
-        console.log('Original width:', this.imageOriginalWidth);
-        this.imageLoaded = true;
-        this.ngAfterViewInit();
+    // if (this.image && this.imageContainerQuery)
+    //   this.renderer.removeChild(this.imageContainerQuery.nativeElement, this.image);
+    // this.image = new Image();
+    if (!this.image)
+      this.image = new Image();
+
+    if (this.image) {
+      this.image.setAttribute('draggable', 'false');
+      this.image.src = value;
+      this.image.onload = () => {
+        if (this.image) {
+          // this.imageOriginalWidth = this.image.width;
+          // console.log('Original width:', this.imageOriginalWidth);
+          // this.imageLoaded = true;
+          this.ngAfterViewInit();
+        }
       }
     }
   }
@@ -60,8 +69,8 @@ export class PreviewComponent implements AfterViewInit {
 
   public avatarRelativeRectangle?: Rectangle;
 
-  private imageOriginalWidth?: number;
-  private imageLoaded: boolean = false;
+  // private imageOriginalWidth?: number;
+  // private imageLoaded: boolean = false;
 
   private image?: HTMLImageElement;
 
@@ -70,14 +79,13 @@ export class PreviewComponent implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    if (this.image && this.imageContainerQuery && this.imageLoaded) {
+    if (this.image && this.imageContainerQuery) {
       this.image.style.width = '100%';
       this.renderer.appendChild(this.imageContainerQuery.nativeElement, this.image);
 
       this.image.onresize = () => {
         if (this.image && this.imageOriginalWidth)
           this.imageCoordinates.setupSystem(0, 0, this.image.width / this.imageOriginalWidth);
-        this.imageLoaded = false;
       };
     }
   }

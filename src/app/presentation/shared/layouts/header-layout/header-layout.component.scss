@@ -8,7 +8,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 80px;
+  padding-left: 80px;
+  padding-right: 80px;
+  min-height: 8vh;
   background-color: $accent-color;
 
   font-size: $fs-desktop-label;
@@ -47,19 +49,9 @@ header {
 
 // Main
 main {
-  padding: 30px 80px;
-}
-
-// Footer
-footer {
-  padding-bottom: 10px;
-
-  .line {
-    height: 1px;
-    margin-bottom: 10px;
-    background-color: $dark-color;
-  }
-  .subheading {
-    margin: 0;
-  }
+  height: 92vh;
+  overflow: clip;
+  padding-top: 30px;
+  padding-left: 80px;
+  padding-right: 80px;
 }

@@ -1,5 +1,5 @@
 <div (window:resize)="calculateWeight()"></div>
-<div class="bg-image w-100" #imageContainer>
+<div class="container" #imageContainer>
   <img *ngIf="avatarImage && avatarRectangle && avatarScale"
        [src]="avatarImage"
        alt="avatar"
