@@ -76,7 +76,7 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   }
 
   private comparator(a: Project, b: Project): number {
-    return moment(a.updatedAt).unix() - moment(b.updatedAt).unix();
+    return moment(b.updatedAt).unix() - moment(a.updatedAt).unix();
   }
 
   public getProjectId(id: string): string {
