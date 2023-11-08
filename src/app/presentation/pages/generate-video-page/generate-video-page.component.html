@@ -77,8 +77,8 @@
       </div>
       <div class="property full-height" *ngIf="project.slides[currentSlideIndex].text">
         <div class="property__header">Текст</div>
-        <div class="property__main inactive">
-          <textarea readonly class="text inactive" [value]="project.slides[currentSlideIndex].text"></textarea>
+        <div class="property__main">
+          <span class="text-field">{{project.slides[currentSlideIndex].text}}</span>
         </div>
       </div>
     </div>

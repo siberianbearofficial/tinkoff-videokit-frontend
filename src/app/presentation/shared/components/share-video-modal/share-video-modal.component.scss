@@ -7,33 +7,33 @@
   padding: 30px;
   display: flex;
   flex-flow: column;
-  gap: 30px;
+  gap: 20px;
+  justify-content: center;
 
   background-color: $white-color;
   border-radius: 5px;
+
+  text-align: center;
 
   .subheading {
     font-weight: $fw-bold;
   }
 
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .modal-main {
     display: flex;
     flex-flow: column;
-    gap: 30px;
+    gap: 20px;
+    justify-content: center;
 
     .qr {
       display: flex;
       flex-flow: column;
-      gap: 10px;
+      align-items: center;
+      gap: 20px;
 
       &__header {
         font-weight: $fw-bold;
+        font-size: $fs-desktop-subheading;
       }
     }
 
@@ -58,6 +58,19 @@
           }
         }
       }
+    }
+  }
+
+  .modal-footer {
+
+    .button {
+      margin: 0 auto;
+    }
+    .button-red {
+      background-color: $white-color;
+      border: 3px solid $red-color;
+      color: $red-color;
+      font-weight: $fw-bold;
     }
   }
 }
