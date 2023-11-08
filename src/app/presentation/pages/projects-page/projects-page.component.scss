@@ -58,9 +58,11 @@
     display: flex;
     gap: 30px;
     align-items: center;
+    justify-content: center;
+    text-align: center;
 
-    &__id {
-
+    &__id, &__time, &__date {
+      width: 20%;
     }
 
     &__processed {

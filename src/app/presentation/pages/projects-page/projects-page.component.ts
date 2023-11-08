@@ -85,11 +85,13 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
 
   public getProjectDate(updatedAt: string): string {
     const timeDate = moment(updatedAt).toDate();
-    return `${timeDate.getDay()}.${timeDate.getMonth()}`;
+    return `${timeDate.getDate()}.${timeDate.getMonth() + 1}`;
   }
 
   public getProjectTime(updatedAt: string): string {
-    const timeString = moment(updatedAt).toDate().toTimeString();
+    const moscowTime = moment(updatedAt).toDate();
+    moscowTime.setUTCHours(moscowTime.getUTCHours() + 3);
+    const timeString = moscowTime.toTimeString();
     return `${timeString.slice(0, timeString.indexOf(':', 3))}`;
   }
 

@@ -9,9 +9,7 @@
            routerLink="/projects/{{project.id}}"
            *ngFor="let project of unprocessedProjects">
         <div class="project__id">{{getProjectId(project.id)}}</div>
-        <div class="separator"></div>
         <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
-        <div class="separator"></div>
         <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
       </div>
     </div>
@@ -23,9 +21,7 @@
            routerLink="/projects/{{project.id}}"
            *ngFor="let project of processedProjects">
         <div class="project__id">{{getProjectId(project.id)}}</div>
-        <div class="separator"></div>
         <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
-        <div class="separator"></div>
         <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
       </div>
     </div>
