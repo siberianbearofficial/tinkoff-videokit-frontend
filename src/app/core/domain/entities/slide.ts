@@ -6,6 +6,7 @@ export interface Slide {
   backgroundImageChoicePaths: Array<string>;
   avatarPosition: Point;
   avatarScale: number;
+  avatarVideoPath: string;
   retries: number;
   status: string;
   videoLink?: string;

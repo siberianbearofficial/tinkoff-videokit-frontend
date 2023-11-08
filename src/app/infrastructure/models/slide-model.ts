@@ -11,6 +11,7 @@ export interface SlideModel {
   text: string;
   avatar_position: Point;
   avatar_scale: number;
+  avatar_video_path: string;
   task_id: string;
   scene_template: string;
   updated_at: string;
