@@ -90,7 +90,13 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   public getProjectDate(updatedAt: string): string {
     const timeDate = moment(updatedAt).toDate();
     timeDate.setUTCHours(timeDate.getUTCHours() + 3);
-    return `${timeDate.getDate()}.${timeDate.getMonth() + 1}`;
+    return `${timeDate.getDate()} ${this.getMonth(timeDate.getMonth())}`;
+  }
+
+  private getMonth(month: number): string {
+    console.log(month);
+    const months: string[] = ['Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июня', 'Июля', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+    return months[month];
   }
 
   public getProjectTime(updatedAt: string): string {
