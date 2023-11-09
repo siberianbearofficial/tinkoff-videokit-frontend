@@ -94,7 +94,6 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   }
 
   private getMonth(month: number): string {
-    console.log(month);
     const months: string[] = ['Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июня', 'Июля', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
     return months[month];
   }
