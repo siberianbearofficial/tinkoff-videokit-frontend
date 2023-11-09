@@ -5,24 +5,35 @@
     <div class="left-side-container">
       <div class="subheading"><span class="unprocessed"><mat-icon>sync</mat-icon> На генерации</span></div>
       <div class="separator"></div>
-      <div class="project"
-           routerLink="/projects/{{project.id}}"
+      <div class="project" title="{{project.status}} (retries: {{project.retries}})"
            *ngFor="let project of unprocessedProjects">
-        <div class="project__id">{{getProjectId(project.id)}}</div>
-        <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
-        <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
+        <div class="project__main" routerLink="/projects/{{project.id}}">
+          <div class="project__id">{{getProjectId(project.id)}}</div>
+          <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
+          <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
+        </div>
+        <div class="project__additional">
+          <div class="project__delete" (click)="onDeleteButtonClick(project)">
+            <mat-icon>delete</mat-icon>
+          </div>
+        </div>
       </div>
     </div>
     <div class="separator"></div>
     <div class="right-side-container">
       <div class="subheading"><span class="processed"><mat-icon>done</mat-icon> Сгенерировано</span></div>
       <div class="separator"></div>
-      <div class="project"
-           routerLink="/projects/{{project.id}}"
-           *ngFor="let project of processedProjects">
-        <div class="project__id">{{getProjectId(project.id)}}</div>
-        <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
-        <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
+      <div class="project" *ngFor="let project of processedProjects">
+        <div class="project__main" routerLink="/projects/{{project.id}}">
+          <div class="project__id">{{getProjectId(project.id)}}</div>
+          <div class="project__time">{{getProjectTime(project.updatedAt)}}</div>
+          <div class="project__date">{{getProjectDate(project.updatedAt)}}</div>
+        </div>
+        <div class="project__additional">
+          <div class="project__delete" (click)="onDeleteButtonClick(project)">
+            <mat-icon>delete</mat-icon>
+          </div>
+        </div>
       </div>
     </div>
   </div>

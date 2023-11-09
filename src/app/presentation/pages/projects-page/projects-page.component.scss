@@ -50,20 +50,49 @@
   }
 
   .project {
-    cursor: pointer;
     font-size: $fs-desktop-subheading;
     font-weight: $fw-bold;
-    background: $input-color;
-    border-radius: 5px;
-    padding: 5px 10px;
     display: flex;
-    gap: 30px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
     text-align: center;
 
+    &__main, &__additional {
+      background: $input-color;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      &:hover {
+        background: $input-dark-color;
+      }
+    }
+
+    &__main {
+      flex: 1 1 auto;
+    }
+
+    &__additional {
+      display: none;
+
+      .project__delete {
+        display: flex;
+        align-items: center;
+      }
+    }
+
     &__id, &__time, &__date {
       width: 20%;
+    }
+
+    &:hover .project__additional {
+      display: flex;
     }
 
     &__processed {
@@ -88,10 +117,6 @@
     .unprocessed-badge {
       border-color: $red-color;
       color: $red-color;
-    }
-
-    &:hover {
-      background: $input-dark-color;
     }
   }
 }

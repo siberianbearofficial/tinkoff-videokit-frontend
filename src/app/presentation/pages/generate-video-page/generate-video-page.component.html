@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="middle-side-container">
-    <div class="middle-side-container__header">
+    <div class="middle-side-container__header" [title]="project.userPrompt">
       <app-preview avatarImage="assets/img/thara-man-round.png"
                    [avatarRectangle]="{
                      topLeftPoint: project.slides[currentSlideIndex].avatarPosition,
@@ -58,6 +58,11 @@
            (click)="onQrButtonClick()">
         <mat-icon>file_download</mat-icon>
         Скачать готовое видео
+      </div>
+      <div class="button button-delete"
+           (click)="onDeleteButtonClick()">
+        <mat-icon>delete</mat-icon>
+        Удалить
       </div>
     </div>
     <div class="middle-side-container__footer">

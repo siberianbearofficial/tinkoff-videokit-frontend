@@ -125,6 +125,17 @@
         &-download {
           background: $input-color;
         }
+
+        &-delete {
+          background: $white-color;
+          border: 3px solid $red-color;
+          color: $red-color;
+          font-weight: $fw-bold;
+
+          &:hover {
+            background: $input-color;
+          }
+        }
       }
     }
 

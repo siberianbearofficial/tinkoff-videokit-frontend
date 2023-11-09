@@ -1,0 +1,78 @@
+@import "../../../../../sizes";
+@import "../../../../../colors";
+@import "../../../../../weights";
+
+
+.modal-container {
+  padding: 30px;
+  display: flex;
+  flex-flow: column;
+  gap: 20px;
+  justify-content: center;
+
+  background-color: $white-color;
+  border-radius: 5px;
+
+  text-align: center;
+
+  .subheading {
+    font-weight: $fw-bold;
+  }
+
+  .modal-main {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    justify-content: center;
+
+    .text-field {
+      background-color: $input-color;
+      background-clip: padding-box;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 10px;
+      color: $dark-color;
+
+      label {
+        display: block;
+        font-size: $fs-desktop-label;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      input {
+        display: block;
+        font-family: inherit;
+        font-size: $fs-desktop-input;
+        width: 100%;
+      }
+    }
+  }
+
+  .modal-footer {
+    display: flex;
+    gap: 20px;
+
+    .button {
+      margin: 0 auto;
+    }
+
+    .button-red {
+      background-color: $white-color;
+      border: 3px solid $red-color;
+      color: $red-color;
+      font-weight: $fw-bold;
+
+      &:hover {
+        background-color: $input-color;
+      }
+    }
+
+    .button-secondary {
+      background-color: $input-color;
+
+      &:hover {
+        background-color: $input-dark-color;
+      }
+    }
+  }
+}

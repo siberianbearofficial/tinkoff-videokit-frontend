@@ -10,6 +10,7 @@ export interface Project {
   sceneTemplate: string;
   mjImages: Array<string>;
   slides: Array<Slide>;
+  retries: number;
   createdAt: string;
   updatedAt: string;
   userPrompt: string;

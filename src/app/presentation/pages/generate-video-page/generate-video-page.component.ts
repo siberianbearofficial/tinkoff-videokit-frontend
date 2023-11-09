@@ -11,6 +11,7 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 import {ShareVideoModalComponent} from "../../shared/components/share-video-modal/share-video-modal.component";
 import * as lodash from "lodash";
 import {Rectangle} from "../../../core/domain/entities/rectangle";
+import {CodeEnterModalComponent} from "../../shared/components/code-enter-modal/code-enter-modal.component";
 
 @Component({
   selector: 'app-generate-video-page',
@@ -25,6 +26,7 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
   private videoModalOnCloseSubscription!: Subscription;
   private shareVideoModalOnCloseSubscription!: Subscription;
   private projectPollingSubscription!: Subscription;
+  private deleteVideoSubscription!: Subscription;
 
   public error: string = '';
 
@@ -126,8 +128,10 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
         .subscribe((result: boolean | void): void => {
           if (typeof result != 'boolean') {
             this.hideError();
-            if (this.project)
+            if (this.project) {
+              this.project.status = 'CREATED';
               this.startProjectPolling(this.project);
+            }
           }
         });
     }
@@ -160,6 +164,30 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
           'video_url': this.project.videoLink
         }
       }).closed.subscribe();
+    }
+  }
+
+  public onDeleteButtonClick(): void {
+    if (this.project) {
+      this.deleteVideoSubscription = this.modalService.open(CodeEnterModalComponent, {
+        panelClass: 'modal-container',
+        width: "40%"
+      }).closed
+        .pipe(
+          switchMap((code) => {
+            if (code && this.project)
+              return this.projectsService.deleteProject(this.project, code as string);
+            return of(void 0);
+          }),
+          catchError((error: Error) => {
+            this.showError(error);
+            return of(false);
+          })
+        )
+        .subscribe((result: boolean | void): void => {
+          if (typeof result != 'boolean')
+            this.hideError();
+        });
     }
   }
 
@@ -215,5 +243,7 @@ export class GenerateVideoPageComponent implements OnInit, OnDestroy {
       this.shareVideoModalOnCloseSubscription.unsubscribe();
     if (this.projectPollingSubscription)
       this.projectPollingSubscription.unsubscribe();
+    if (this.deleteVideoSubscription)
+      this.deleteVideoSubscription.unsubscribe();
   }
 }

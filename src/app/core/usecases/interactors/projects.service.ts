@@ -25,7 +25,7 @@ export class ProjectsService implements ProjectsServiceInterface {
     return this.projectsAdapter.updateProject(project);
   }
 
-  public deleteProject(project: Project): Observable<void> {
-    return project.id ? this.projectsAdapter.deleteProjectById(project.id) : of(void 0);
+  public deleteProject(project: Project, code: string): Observable<void> {
+    return project.id ? this.projectsAdapter.deleteProjectById(project.id, code) : of(void 0);
   }
 }

@@ -84,6 +84,7 @@ export class ProjectsAdapterService {
               gptScenario: projectModel.gpt_scenario,
               mjImages: projectModel.mj_images,
               slides: slides,
+              retries: projectModel.retries,
               sceneTemplate: projectModel.scene_template,
               createdAt: projectModel.created_at,
               updatedAt: projectModel.updated_at,
@@ -146,6 +147,7 @@ export class ProjectsAdapterService {
             gptScenario: projectModel.gpt_scenario,
             mjImages: projectModel.mj_images,
             slides: slides,
+            retries: projectModel.retries,
             sceneTemplate: projectModel.scene_template,
             createdAt: projectModel.created_at,
             updatedAt: projectModel.updated_at,
@@ -186,6 +188,7 @@ export class ProjectsAdapterService {
       gpt_scenario: project.gptScenario,
       mj_images: project.mjImages,
       chunks: slideModels,
+      retries: project.retries,
       scene_template: project.sceneTemplate,
       created_at: project.createdAt,
       updated_at: project.updatedAt,
@@ -197,8 +200,8 @@ export class ProjectsAdapterService {
       );
   }
 
-  public deleteProjectById(id: string): Observable<void> {
-    return this.projectsApi.deleteProject(id)
+  public deleteProjectById(id: string, code: string): Observable<void> {
+    return this.projectsApi.deleteProject(id, code)
       .pipe(
         map(() => void 0)
       );

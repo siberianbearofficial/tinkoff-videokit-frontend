@@ -11,6 +11,7 @@ export interface ProjectModel {
   scene_template: string;
   mj_images: Array<string>;
   chunks: Array<SlideModel>;
+  retries: number;
   updated_at: string;
   created_at: string;
 }

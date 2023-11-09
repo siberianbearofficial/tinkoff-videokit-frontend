@@ -20,7 +20,7 @@ import {UsersListComponent} from './presentation/shared/components/users-list/us
 import {AuthenticationInterceptor} from "./presentation/shared/interceptors/authentication.interceptor";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProfilePageComponent} from './presentation/pages/profile-page/profile-page.component';
 import {DialogModule} from "@angular/cdk/dialog";
 import {HeaderLayoutComponent} from './presentation/shared/layouts/header-layout/header-layout.component';
@@ -35,6 +35,7 @@ import {VideoModalComponent} from './presentation/shared/components/video-modal/
 import {ProjectsPageComponent} from './presentation/pages/projects-page/projects-page.component';
 import {ShareVideoModalComponent} from './presentation/shared/components/share-video-modal/share-video-modal.component';
 import {CdkDrag} from "@angular/cdk/drag-drop";
+import { CodeEnterModalComponent } from './presentation/shared/components/code-enter-modal/code-enter-modal.component';
 
 const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
@@ -63,20 +64,22 @@ const httpInterceptorProviders = [
     SlidesListComponent,
     VideoModalComponent,
     ProjectsPageComponent,
-    ShareVideoModalComponent
+    ShareVideoModalComponent,
+    CodeEnterModalComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        DialogModule,
-        MatIconModule,
-        NgOptimizedImage,
-        QRCodeModule,
-        CdkDrag
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    DialogModule,
+    MatIconModule,
+    NgOptimizedImage,
+    QRCodeModule,
+    CdkDrag,
+    FormsModule
+  ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {catchError, concatMap, of, Subscription, timer} from "rxjs";
+import {catchError, concatMap, of, Subscription, switchMap, timer} from "rxjs";
 import {ProjectsService} from "../../../core/usecases/interactors/projects.service";
 import {Project} from "../../../core/domain/entities/project";
 import * as lodash from "lodash";
 import * as moment from "moment";
+import {CodeEnterModalComponent} from "../../shared/components/code-enter-modal/code-enter-modal.component";
+import {Dialog} from "@angular/cdk/dialog";
 
 @Component({
   selector: 'app-projects-page',
@@ -12,6 +14,7 @@ import * as moment from "moment";
 })
 export class ProjectsPageComponent implements OnInit, OnDestroy {
   private projectsPollingSubscription!: Subscription;
+  private deleteVideoSubscription!: Subscription;
 
   public error: string = '';
 
@@ -19,7 +22,8 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   public processedProjects?: Project[];
   public unprocessedProjects?: Project[];
 
-  constructor(private projectsService: ProjectsService) {
+  constructor(private projectsService: ProjectsService,
+              private modalService: Dialog) {
   }
 
   public ngOnInit(): void {
@@ -66,7 +70,7 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
   }
 
   private unprocessedFilter(project: Project): boolean {
-    return project.status != 'DONE';
+    return project.status != 'DONE' && project.status != 'ERROR';
   }
 
   public setProjects(projects: Project[]): void {
@@ -85,6 +89,7 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
 
   public getProjectDate(updatedAt: string): string {
     const timeDate = moment(updatedAt).toDate();
+    timeDate.setUTCHours(timeDate.getUTCHours() + 3);
     return `${timeDate.getDate()}.${timeDate.getMonth() + 1}`;
   }
 
@@ -95,9 +100,33 @@ export class ProjectsPageComponent implements OnInit, OnDestroy {
     return `${timeString.slice(0, timeString.indexOf(':', 3))}`;
   }
 
+  public onDeleteButtonClick(project: Project): void {
+    this.deleteVideoSubscription = this.modalService.open(CodeEnterModalComponent, {
+      panelClass: 'modal-container',
+      width: "40%"
+    }).closed
+      .pipe(
+        switchMap((code) => {
+          if (code && project)
+            return this.projectsService.deleteProject(project, code as string);
+          return of(void 0);
+        }),
+        catchError((error: Error) => {
+          this.showError(error);
+          return of(false);
+        })
+      )
+      .subscribe((result: boolean | void): void => {
+        if (typeof result != 'boolean')
+          this.hideError();
+      });
+  }
+
   public ngOnDestroy(): void {
     if (this.projectsPollingSubscription)
       this.projectsPollingSubscription.unsubscribe();
+    if (this.deleteVideoSubscription)
+      this.deleteVideoSubscription.unsubscribe();
   }
 
   protected readonly moment = moment;

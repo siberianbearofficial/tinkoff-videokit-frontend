@@ -100,8 +100,8 @@ export class ProjectsApiService {
       }));
   }
 
-  public deleteProject(id: string) {
-    return this.http.delete(`${BASE_API_URL}/${PROJECTS_URL}/${id}`)
+  public deleteProject(id: string, code: string) {
+    return this.http.delete(`${BASE_API_URL}/${PROJECTS_URL}/${id}`, {headers: {Authorization: `Bearer ${code}`}})
       .pipe(catchError((error): Observable<never> => {
         switch (error.status) {
           case 0: {
